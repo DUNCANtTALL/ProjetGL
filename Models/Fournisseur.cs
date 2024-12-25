@@ -6,15 +6,14 @@
         private string email;
         private string password;
         private Commande commande;
-        private List<Message> messages;
 
-        public Fournisseur(string name, string email, string password, Commande commande, List<Message> messages)
+        public Fournisseur(string name, string email, string password, Commande commande)
         {
             this.name = name;
             this.email = email;
             this.password = password;
             this.commande = commande;
-            this.messages = messages;
+            
         }
 
         public string Email { get => email; set => email = value; }

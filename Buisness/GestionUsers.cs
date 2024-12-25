@@ -1,36 +1,30 @@
-﻿using ProjetGL.Models;
+﻿using ProjetGL.Data;
+using ProjetGL.Models;
 
 namespace ProjetGL.Buisness
 {
     public class GestionUsers
     {
-        List<User> users ;
-
-        public GestionUsers()
-        {
-            users = new List<User>();   
-            
-        }
+        IDataUsers data = new DataUsers(); 
+       
+ 
 
         public List<User> GetUsers()
         {
-            return users ; 
+            return data.GetAllUsers() ; 
         }
         public void addUser(User user)
         {
-            users.Add(user);
+            data.AddUser(user);
         }
         public void DeleteUser(User user)
         {
-            users.Remove(user);
+            data.DeleteUser(user.Name);
         }
+
         public User GetUser(string name )
         {
-            foreach (User user in users)
-            {
-                if(user.Name == name ) return user;
-            }
-            return null;
+            return data.FindUser(name);    
         }
 
 

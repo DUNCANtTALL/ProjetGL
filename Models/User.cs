@@ -1,22 +1,34 @@
 ﻿namespace ProjetGL.Models
 {
-    public class User
+    public  class User
     {
-        private string name;
-        private string email;
-        private string password;
-        private List<Message> messages;
+        public int UserId { get; set; } 
+        public string Name { get; set; } 
+        public string Email { get; set; } 
+        public string Password { get; set; } 
 
-        public void SendMessage(Fournisseur receiver, string content)
+        // Navigation properties for messaging
+        public  List<Message> SentMessages { get; set; }
+        public List<Message> ReceivedMessages { get; set; }
+
+        public User()
         {
-            var message = new Message(this.email, receiver.Email, content);
-            receiver.messages.Add(message); 
+            SentMessages = new List<Message>();
+            ReceivedMessages = new List<Message>();
         }
-        public List<Message> ViewMessages()
+        
+
+        public void SendMessage(User receiver, string content)
         {
-            return this.messages;
+            var message = new Message
+            {
+                Sender = this,
+                Receiver = receiver,
+                Content = content,
+                SentAt = DateTime.Now
+
+            };
+            receiver.ReceivedMessages.Add(message);
         }
-
-
     }
 }

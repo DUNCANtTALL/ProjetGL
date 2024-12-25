@@ -2,18 +2,26 @@
 {
     public class Message
     {
-        public int Id { get; set; }
-        public string SenderEmail { get; set; } 
-        public string ReceiverEmail { get; set; } 
+        public int MessageId { get; set; } 
         public string Content { get; set; }
-        public DateTime Timestamp { get; set; } 
+        public DateTime SentAt { get; set; } 
 
-        public Message(string senderEmail, string receiverEmail, string content)
+        public User Sender { get; set; } 
+        public User Receiver { get; set; } 
+
+        public Message() { }
+
+        public Message(User sender, User receiver, string content)
         {
-            SenderEmail = senderEmail;
-            ReceiverEmail = receiverEmail;
+            Sender = sender;
+            Receiver = receiver;
             Content = content;
-            Timestamp = DateTime.Now;
+            SentAt = DateTime.Now;
+        }
+
+        public override string ToString()
+        {
+            return $"From: {Sender.Name} ({Sender.Email})\nTo: {Receiver.Name} ({Receiver.Email})\nSent At: {SentAt}\nMessage: {Content}";
         }
     }
 }
