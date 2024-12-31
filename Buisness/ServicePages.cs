@@ -2,12 +2,13 @@
 {
     public static class ServicesPages
     {
-        public static GestionUsers manager; //un service
+        public static GestionUsers managerUsers; //un service
+        public static GestionMessages managerMessages; 
 
         static ServicesPages()
         {
-            manager = new GestionUsers(); //on instancie le service
-            //manager = new AccountManagerBD(); //on instancie le service
+            managerUsers = new GestionUsers();
+            managerMessages = new GestionMessages();
         }
     }
 }

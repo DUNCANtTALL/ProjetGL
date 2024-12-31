@@ -1,0 +1,29 @@
+﻿@page
+@model ProjetGL.Pages.RegisterModel
+@{
+    string today = DateTime.Now.ToShortDateString();
+
+}
+<h1>Registration</h1>
+<p>Aujourd'hui le @today</p>
+<form method="post" class="col-4 offset-4">
+    <div>
+        <label class="form-label">Username</label>
+        <input type="text" asp-for="user.Name" class="form-control" />
+        <span asp-validation-for="user.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label class="form-label">Email</label>
+        <input type="text" asp-for="user.Email" class="form-control" />
+        <span asp-validation-for="user.Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label class="form-label">Password</label>
+        <input type="password" asp-for="user.Password" class="form-control" />
+        <span asp-validation-for="user.Password" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-success">Register</button>
+    </div>
+
+</form>

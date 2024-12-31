@@ -22,8 +22,8 @@
         {
             var message = new Message
             {
-                Sender = this,
-                Receiver = receiver,
+                SenderId = this.UserId,
+                ReceiverId = receiver.UserId,
                 Content = content,
                 SentAt = DateTime.Now
 

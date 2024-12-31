@@ -1,29 +1,21 @@
-﻿using ProjetGL.Models;
+﻿using ProjetGL.Data;
+using ProjetGL.Models;
 
 namespace ProjetGL.Buisness
 {
     public class GestionMessages
     {
-        List<Message> messages;
-
-        public GestionMessages()
+    IDataMessages data = new DataMessages(); 
+        
+        public List<Message> GetConversation(int senderId , int receiverId)
         {
-            messages = new List<Message>();
-
-        }
-
-        public List<Message> GetMessages()
-        {
-            return messages;
+            return data.GetConversation(senderId,receiverId);
         }
         public void addMessage(Message message)
         {
-            messages.Add(message);
+            data.AddMessage(message.SenderId,message.SenderId,message.Content);
         }
-        public void DeleteMessage(Message message)
-        {
-            messages.Remove(message);
-        }
+        
 
        
     }

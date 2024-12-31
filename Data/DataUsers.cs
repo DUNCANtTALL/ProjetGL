@@ -11,7 +11,9 @@ namespace ProjetGL.Data
 
         public DataUsers()
         {
-            connection = new SqlConnection("Data Source=DESKTOP-7VJ1VUJ;Initial Catalog=ProjetGL;Integrated Security=True");
+            connection = new SqlConnection();
+            connection.ConnectionString = @"Data Source=LAPTOP-6QFS6SK0\DRISSQL;Initial Catalog=ProjetGL;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+            connection.Open();
             Command = new SqlCommand();
             Command.Connection = connection;
         }
@@ -26,7 +28,7 @@ namespace ProjetGL.Data
             Command.Parameters.AddWithValue("@Name", account.Name);
             Command.Parameters.AddWithValue("@Email", account.Email);
             Command.Parameters.AddWithValue("@Password", account.Password);
-            Command.Parameters.AddWithValue("@UserType", account.GetType());
+            Command.Parameters.AddWithValue("@UserType", "Fournisseur");
             Command.ExecuteNonQuery();
         }
 
@@ -59,7 +61,7 @@ namespace ProjetGL.Data
         {
             try
             {
-                Command.CommandText = "SELECT UserId, Name, Email, Password, UserType, CreatedAt FROM Users WHERE Name = @Username";
+                Command.CommandText = "SELECT UserId, Name, Email, Password, UserType, CreatedAt FROM Users WHERE Email = @Username";
                 SqlDataReader rs = Command.ExecuteReader();
                 
                 while (rs.Read())
