@@ -2,25 +2,28 @@
 {
     public class Commande
     {
+        private int idAppelOffre;
+        private int idFournisseur;
         private float total;
-        private string datelivraison;
-        private string dategarantie;
-        private List<Materielle> materilles;
+        private DateTime datelivraison;
+        private DateTime dategarantie;
+        private List<Materielle> materielles;
 
-        public Commande(float total, string datelivraison, string dategarantie)
+        public Commande(int idAppelOffre, int idFournisseur, float total, DateTime datelivraison, DateTime dategarantie, List<Materielle> materielles)
         {
+            this.IdAppelOffre = idAppelOffre;
+            this.IdFournisseur = idFournisseur;
             this.Total = total;
             this.Datelivraison = datelivraison;
             this.Dategarantie = dategarantie;
-            this.Materilles = new List<Materielle>();
+            this.Materielles = materielles;
         }
-        public void add(Materielle materielle)
-        {
-            materilles.Add(materielle);
-        }
+
+        public int IdAppelOffre { get => idAppelOffre; set => idAppelOffre = value; }
+        public int IdFournisseur { get => idFournisseur; set => idFournisseur = value; }
         public float Total { get => total; set => total = value; }
-        public string Datelivraison { get => datelivraison; set => datelivraison = value; }
-        public string Dategarantie { get => dategarantie; set => dategarantie = value; }
-        public List<Materielle> Materilles { get => materilles; set => materilles = value; }
+        public DateTime Datelivraison { get => datelivraison; set => datelivraison = value; }
+        public DateTime Dategarantie { get => dategarantie; set => dategarantie = value; }
+        public List<Materielle> Materielles { get => materielles; set => materielles = value; }
     }
 }

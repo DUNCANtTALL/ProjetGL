@@ -3,22 +3,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjetGL.Buisness;
 using ProjetGL.Models;
 
-namespace ProjetGL.Pages
+namespace ProjetGL.Pages.ResponsableDesResources
 {
-    public class RegisterModel : PageModel
+    public class CreateUserModel : PageModel
     {
-        User User; 
+
+
+        User User;
         public User user
-        {   get => User;  
-            set => User = value; 
+        {
+            get => User;
+            set => User = value;
         }
         public void OnGet()
         {
 
         }
-       public void OnPost(User User)
+        public void OnPost(User User)
         {
-            user.Type = "Fournisseur"; 
             ServicesPages.managerUsers.addUser(User);
         }
     }

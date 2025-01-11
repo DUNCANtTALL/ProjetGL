@@ -7,6 +7,7 @@ namespace ProjetGL.Data
     {
         void AddUser(User user);
         User FindUser(string username);
+        public User FindUserByID(int id);
         void UpdateUser(User user);
         void DeleteUser(string username);
         List<User> GetAllUsers();

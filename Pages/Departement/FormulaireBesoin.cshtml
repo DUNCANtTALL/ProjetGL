@@ -1,0 +1,80 @@
+﻿@page
+@model ProjetGL.Pages.Departement.FormulaireBesoinModel
+@{
+    ViewData["Title"] = "Formulaire de Demande d'Équipements";
+}
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+    <form method="post" class="needs-validation" novalidate>
+        <div class="mb-4">
+            <label for="Description" class="form-label">Departement</label>
+            <input type="text" id="Description" name="Description" class="form-control" placeholder="Entrez votre Departement" required />
+            <div class="text-danger">
+                <span asp-validation-for="Description"></span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h3>Ordinateurs</h3>
+            <div id="ordinateurs">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="Ordinateurs[0].Marque" class="form-label">Marque</label>
+                            <input type="text" name="Ordinateurs[0].Marque" class="form-control" placeholder="Marque de l'ordinateur" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[0].Cpu" class="form-label">CPU</label>
+                            <input type="text" name="Ordinateurs[0].Cpu" class="form-control" placeholder="Processeur" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[0].Ram" class="form-label">RAM</label>
+                            <input type="text" name="Ordinateurs[0].Ram" class="form-control" placeholder="Mémoire vive (RAM)" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[0].Disque" class="form-label">Disque</label>
+                            <input type="text" name="Ordinateurs[0].Disque" class="form-control" placeholder="Disque dur/SSD" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[0].Ecran" class="form-label">Écran</label>
+                            <input type="text" name="Ordinateurs[0].Ecran" class="form-control" placeholder="Taille de l'écran" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="OrdinateurQuantities[0]" class="form-label">Quantité</label>
+                            <input type="number" name="OrdinateurQuantities[0]" class="form-control" placeholder="Quantité" min="1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h3>Imprimantes</h3>
+            <div id="imprimantes">
+                <!-- Imprimante 1 -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="Imprimantes[0].Marque" class="form-label">Marque</label>
+                            <input type="text" name="Imprimantes[0].Marque" class="form-control" placeholder="Marque de l'imprimante" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Imprimantes[0].Vitesse" class="form-label">Vitesse</label>
+                            <input type="text" name="Imprimantes[0].Vitesse" class="form-control" placeholder="Vitesse d'impression" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Imprimantes[0].Resolution" class="form-label">Résolution</label>
+                            <input type="text" name="Imprimantes[0].Resolution" class="form-control" placeholder="Résolution d'impression" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="ImprimanteQuantities[0]" class="form-label">Quantité</label>
+                            <input type="number" name="ImprimanteQuantities[0]" class="form-control" placeholder="Quantité" min="1" value="1"  required />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
+</div>

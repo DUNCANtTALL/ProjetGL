@@ -11,7 +11,7 @@ namespace ProjetGL.Data
         public DataMessages()
         {
             connection = new SqlConnection();
-            connection.ConnectionString = @"Data Source=LAPTOP-6QFS6SK0\DRISSQL;Initial Catalog=Asp;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+            connection.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
             connection.Open();
             Command = new SqlCommand();
             Command.Connection = connection;
@@ -19,14 +19,23 @@ namespace ProjetGL.Data
         }
         public void AddMessage(int senderId, int receiverId, string content)
         {
-            Command.CommandText = $@"insert into Messages  values ({senderId},{receiverId},'{content}'' )";
-            Command.ExecuteNonQuery();
+            string query = "INSERT INTO Messages (SenderId, ReceiverId, Content) VALUES (@SenderId, @ReceiverId, @Content)";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@SenderId", senderId);
+                command.Parameters.AddWithValue("@ReceiverId", receiverId);
+                command.Parameters.AddWithValue("@Content", content);
+
+                command.ExecuteNonQuery();
+            }
         }
+
 
         public List<Message> GetConversation(int senderId, int receiverId)
         {
             List<Message> messages = new List<Message>();
-            Command.CommandText = $@"select * from Messages where SenderId = {senderId} and ReceiverId = {receiverId} or SenderId = {receiverId} and ReceiverId = {senderId}";
+            Command.CommandText = $@"select * from  Messages where SenderId = {senderId} and ReceiverId = {receiverId} or SenderId = {receiverId} and ReceiverId = {senderId}";
             SqlDataReader reader = Command.ExecuteReader();
             while (reader.Read())
             {

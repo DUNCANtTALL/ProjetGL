@@ -37,17 +37,9 @@ namespace ProjetGL.Pages
                 return Page();
             }
 
-            var redirectPage = User switch
-            {
-                Fournisseur => "/Fournisseur",
-                ResponsableDesResources => "/ResponsableDesResources",
+            
 
-                ChefDeProjet => "/ChefDeProjet",
-                Departement => "/Depatement",
-                _ => "/Index" 
-            };
-
-            return RedirectToPage(redirectPage);
+            return RedirectToPage();
         }
 
 

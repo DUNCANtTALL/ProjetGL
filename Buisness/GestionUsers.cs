@@ -26,8 +26,14 @@ namespace ProjetGL.Buisness
         {
             return data.FindUser(name);    
         }
+        public User GetUser(int id)
+        {
+            return data.FindUserByID(id);
+        }
 
 
-        
+
+
+
     }
 }

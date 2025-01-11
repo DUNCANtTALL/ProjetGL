@@ -12,7 +12,7 @@ namespace ProjetGL.Data
         public DataUsers()
         {
             connection = new SqlConnection();
-            connection.ConnectionString = @"Data Source=LAPTOP-6QFS6SK0\DRISSQL;Initial Catalog=ProjetGL;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+            connection.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
             connection.Open();
             Command = new SqlCommand();
             Command.Connection = connection;
@@ -28,9 +28,10 @@ namespace ProjetGL.Data
             Command.Parameters.AddWithValue("@Name", account.Name);
             Command.Parameters.AddWithValue("@Email", account.Email);
             Command.Parameters.AddWithValue("@Password", account.Password);
-            Command.Parameters.AddWithValue("@UserType", "Fournisseur");
+            Command.Parameters.AddWithValue("@UserType", account.Type);
             Command.ExecuteNonQuery();
         }
+       
 
         public void DeleteUser(string username)
         {
@@ -76,6 +77,32 @@ namespace ProjetGL.Data
                 rs.Close();
                 return null; 
              
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while finding the user: {ex.Message}");
+                return null;
+            }
+        }
+        public User FindUserByID(int id)
+        {
+            try
+            {
+                Command.CommandText = $@"SELECT UserId, Name, Email, Password, UserType, CreatedAt FROM Users WHERE UserId = {id}";
+                SqlDataReader rs = Command.ExecuteReader();
+
+                while (rs.Read())
+                {
+                    return new User
+                    {
+                        Name = rs["Name"].ToString(),
+                        Email = rs["Email"].ToString(),
+                        Password = rs["Password"].ToString(),
+                    };
+                }
+                rs.Close();
+                return null;
+
             }
             catch (Exception ex)
             {

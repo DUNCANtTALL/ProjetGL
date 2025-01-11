@@ -11,9 +11,10 @@ namespace ProjetGL.Buisness
         {
             return data.GetConversation(senderId,receiverId);
         }
-        public void addMessage(Message message)
+        public void addMessage(int senderId, int receiverId, string content)
         {
-            data.AddMessage(message.SenderId,message.SenderId,message.Content);
+            Message newMessage = new Message(senderId, receiverId, content);
+            data.AddMessage(newMessage.SenderId, newMessage.ReceiverId, newMessage.Content);
         }
         
 

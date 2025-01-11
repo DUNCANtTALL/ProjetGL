@@ -1,0 +1,35 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.CreateUserModel
+@{
+}
+
+
+<form method="post" class="col-4 offset-4">
+    <div>
+        <label class="form-label">Username</label>
+        <input type="text" asp-for="user.Name" class="form-control" />
+        <span asp-validation-for="user.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label class="form-label">Email</label>
+        <input type="text" asp-for="user.Email" class="form-control" />
+        <span asp-validation-for="user.Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label class="form-label">Password</label>
+        <input type="password" asp-for="user.Password" class="form-control" />
+        <span asp-validation-for="user.Password" class="text-danger"></span>
+    </div>
+    <div>
+        <label class="form-label">User Type</label>
+        <select asp-for="user.Type" class="form-control">
+            <option value="">-- Select User Type --</option>
+            <option value="Chef de Projet">Chef de Projet</option>
+            <option value="Departement">Departement</option>
+        </select>
+        <span asp-validation-for="user.Type" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-success">Create User</button>
+    </div>
+</form>

@@ -1,0 +1,167 @@
+﻿@page
+@model ProjetGL.Pages.ChefdeProjet.BesionModel
+@{
+    ViewData["Title"] = "View and Validate Besions";
+}
+
+<h1>View and Validate Besions</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Departement</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var besion in Model.Besions)
+        {
+            <tr>
+                <td>@besion.Id</td>
+                <td>@besion.Desc</td>
+                <td>
+                    @if (besion.Status == false)
+                    {
+                        <span class="badge bg-warning">Pending</span>
+                    }
+                    else if (besion.Status == true)
+                    {
+                        <span class="badge bg-success">Validated</span>
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                    else
+                    {
+                        <span class="badge bg-secondary">Unknown</span>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="Validate" asp-route-id="@besion.Id">
+                        <button type="submit" class="btn btn-success">Validate</button>
+                    </form>
+                    <form method="post" asp-page-handler="Reject" asp-route-id="@besion.Id">
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#details-@besion.Id">
+                        View Details
+                    </button>
+                    <div id="details-@besion.Id" class="collapse">
+                        <h5>Computers</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>CPU</th>
+                                    <th>RAM</th>
+                                    <th>Disk</th>
+                                    <th>Screen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ordinateur in besion.Ordinateurs)
+                                {
+                                    <tr>
+                                        <td>@ordinateur.Marque</td>
+                                        <td>@ordinateur.Cpu</td>
+                                        <td>@ordinateur.Ram</td>
+                                        <td>@ordinateur.Disque</td>
+                                        <td>@ordinateur.Ecran</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <h5>Printers</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Print Speed</th>
+                                    <th>Resolution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var imprimante in besion.Imprimantes)
+                                {
+                                    <tr>
+                                        <td>@imprimante.Marsque</td>
+                                        <td>@imprimante.Vitesse</td>
+                                        <td>@imprimante.Resoluton</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

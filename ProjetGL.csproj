@@ -34,12 +34,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+    <Compile Remove="Pages\Messagerie.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\ChefdeProjet\" />
-    <Folder Include="Pages\ResponsableDesResources\" />
+    <Content Remove="Pages\Messagerie.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
 </Project>
