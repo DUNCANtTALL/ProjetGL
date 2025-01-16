@@ -1,6 +1,8 @@
 ﻿@page
-@model ProjetGL.Pages.Fournisseur.HomeModel
+@model ProjetGL.Pages.Appelsdoffres.DashBoardModel
+
 @{
+    ViewData["Title"] = "Tableau de Bord";
 }
 
 <!DOCTYPE html>
@@ -36,15 +38,18 @@
             Menu
         </div>
         <ul class="mt-4 space-y-4">
-            <!-- Pass userId in the URL as a query parameter -->
             <li>
-                <a href="/Fournisseur/ListerAppelOffre?userId=@Model.UserId" class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600">
+                <a href="#" class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" data-url="/Appelsdoffres/AppelsDoffres">
                     Gestion des Appels d'Offres
                 </a>
             </li>
-
             <li>
-                <a href="/Fournisseur/Notifications?userId=@Model.UserId" class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600">
+                <a href="#" class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" data-url="/Appelsdoffres/Factures">
+                    Factures Ressources
+                </a>
+            </li>
+            <li>
+                <a href="#" class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" data-url="/Appelsdoffres/Notifications">
                     Notifications
                 </a>
             </li>
@@ -68,8 +73,14 @@
             $('#menu-toggle').on('click', function () {
                 sidebar.toggleClass('-translate-x-full');
             });
+
+            // Dynamically load content
+            $('#sidebar a').on('click', function (e) {
+                e.preventDefault();
+                const url = $(this).data('url');
+                $('#main-content').load(url);
+            });
         });
     </script>
-
 </body>
 </html>

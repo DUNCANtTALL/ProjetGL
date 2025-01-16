@@ -1,0 +1,85 @@
+﻿@page
+@model ProjetGL.Pages.Appelsdoffres.AppelsDoffresModel
+
+
+@{
+    ViewData["Title"] = "Gestion des Appels d'Offres";
+}
+
+
+
+
+<!-- Formulaire de création d'un nouvel appel d'offre -->
+<h3>Créer un Nouvel Appel d'Offre</h3>
+<form method="post">  
+    <div class="form-group">  
+        <label for="Titre">Titre</label>  
+        <input type="text" class="form-control" asp-for="AppelDOffre.Titre" required />  
+        <span class="text-danger" asp-validation-for="AppelDOffre.Titre"></span>
+    </div>  
+
+    <div class="form-group">  
+        <label for="DateDebut">Date de début</label>  
+        <input type="date" class="form-control" asp-for="AppelDOffre.DateDebut" required />  
+        <span class="text-danger" asp-validation-for="AppelDOffre.DateDebut"></span>
+    </div>  
+
+    <div class="form-group">  
+        <label for="DateFin">Date de fin</label>  
+        <input type="date" class="form-control" asp-for="AppelDOffre.DateFin" required />  
+        <span class="text-danger" asp-validation-for="AppelDOffre.DateFin"></span>
+    </div>  
+
+    <div class="form-group">  
+        <label for="Description">Description</label>  
+        <textarea class="form-control" asp-for="AppelDOffre.Description" style="width: 100%; height: 150px;" required></textarea>
+        <span class="text-danger" asp-validation-for="AppelDOffre.Description"></span>
+    </div>  
+
+    <button type="submit" class="btn btn-primary">Créer Appel d'Offre</button>  
+</form>  
+
+<hr />
+
+<!-- Liste des appels d'offres existants -->
+<h3>Liste des Appels d'Offres</h3>
+
+@if (Model.Liste != null && Model.Liste.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appel in Model.Liste)
+            {
+                <tr>
+                    <td>@appel.Titre</td>
+                    <td>@appel.DateDebut.ToString("dd/MM/yyyy")</td>
+                    <td>@appel.DateFin.ToString("dd/MM/yyyy")</td>
+                    <td>@appel.Description</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@appel.Id" class="btn btn-warning btn-sm">Modifier</a>
+                        <a asp-page="./Delete" asp-route-id="@appel.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        Aucun appel d'offre n'est disponible pour le moment.
+    </div>
+}
+
+@section Scripts {  
+    <partial name="_ValidationScriptsPartial" />  
+}

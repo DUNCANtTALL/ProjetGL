@@ -8,10 +8,11 @@ namespace ProjetGL.Buisness
         IDataCommande data = new DataCommande();
 
 
-        public List<Commande> GetCommande()
+        public List<Commande> GetAllCommande()
         {
             return data.GetAllCommande();
         }
+        
         public void addCommande(Commande commande)
         {
             data.AddCommande(commande);
@@ -19,6 +20,10 @@ namespace ProjetGL.Buisness
         public void deleteCommande(DateTime dateCommande)
         {
             data.DeleteCommande(dateCommande);
+        }
+        public void validateCommande(int id)
+        {
+            data.ValidateCommande(id);
         }
     }
 }

@@ -2,46 +2,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjetGL.Buisness;
 using ProjetGL.Models;
-using System.Security.Principal;
 
 namespace ProjetGL.Pages
 {
     public class LoginModel : PageModel
     {
-        User user;
-        string MsgError;
+        [BindProperty]
+        public User User { get; set; }
 
-        public User User
-        {
-            get => user;
-            set => user = value;
-        }
-        public void OnGet()
-        {
-        }
+        public string MsgError { get; private set; }
 
-        public IActionResult OnPost(User user)
+        public IActionResult OnPost()
         {
-            // Retrieve the user based on their name
-            User = ServicesPages.managerUsers.GetUser(user.Email);
+            // Authenticate the user
+            var authenticatedUser = ServicesPages.managerUsers.GetUser(User.Email);
 
-            if (User == null)
+            if (authenticatedUser == null)
             {
                 MsgError = "User not found";
                 return Page();
             }
 
-            if (User.Password != user.Password)
+            if (authenticatedUser.Password != User.Password)
             {
                 MsgError = "Wrong password";
                 return Page();
             }
 
-            
-
-            return RedirectToPage();
+            // Redirect based on user type
+            return authenticatedUser.Type switch
+            {
+                "Fournisseur" => RedirectToPage("Fournisseur/Home", new { userId = authenticatedUser.UserId }),
+                "Chef De Projet" => RedirectToPage("/ChefdeProjet/Home", new { userId = authenticatedUser.UserId }),
+                "Departement" => RedirectToPage("/Departement/Home", new { userId = authenticatedUser.UserId }),
+                _ => RedirectToPage("/ResponsableDesResources/Home", new { userId = authenticatedUser.UserId }),
+            };
         }
-
-
     }
 }

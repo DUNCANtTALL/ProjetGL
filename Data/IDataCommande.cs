@@ -7,5 +7,6 @@ namespace ProjetGL.Data
         List<Commande> GetAllCommande();
         void AddCommande(Commande commande);
         void DeleteCommande(DateTime dateCommande);
+        void ValidateCommande(int id );
     }
 }

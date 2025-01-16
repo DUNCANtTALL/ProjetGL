@@ -6,60 +6,137 @@ namespace ProjetGL.Data
 {
     public class DataCommande : IDataCommande
     {
+        private readonly SqlConnection _connection;
+        private readonly SqlCommand _command;
 
-        SqlConnection connection;
-        SqlCommand Command;
-        GestionMaterielle gestionMaterielle = new GestionMaterielle();
-        public DataCommande() {
-            connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\user\source\repos\ProjetGL\ProjetGL\App_Data\ProjetGL.mdf;Integrated Security=True");
-            Command = new SqlCommand();
-            Command.Connection = connection;
-
+        public DataCommande()
+        {
+            _connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;");
+            _command = new SqlCommand { Connection = _connection };
         }
-
 
         public void AddCommande(Commande commande)
         {
-            Command.CommandText = @"
-            INSERT INTO Commande (AppelOffreId,FournisseurId,Total,DateLivraison,DateGarantie) 
-            VALUES (@AppelOffreId, @FournisseurId, @Total, @DateLivraison, @DateGarantie)";
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;"))
+            {
+                SqlCommand command = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = @"
+                INSERT INTO Commande 
+                (AppelOffreId, FournisseurId, Total, DateLivraison, DateGarantie, Marque,PrixUnitaire,Quantite) 
+                VALUES (@AppelOffreId, @FournisseurId, @Total, @DateLivraison, @DateGarantie, @Marque, @PrixUnitaire ,@Quantite)"
+                };
 
-            Command.Parameters.AddWithValue("@AppelOffreId", commande.IdAppelOffre);
-            Command.Parameters.AddWithValue("@FournisseurId", commande.IdFournisseur);
-            Command.Parameters.AddWithValue("@Total", commande.Total);
-            Command.Parameters.AddWithValue("@DateLivraison", commande.Datelivraison);
-            Command.Parameters.AddWithValue("@DateGarantie", commande.Dategarantie);
+                command.Parameters.AddWithValue("@AppelOffreId", commande.IdAppelOffre);
+                command.Parameters.AddWithValue("@FournisseurId", commande.IdFournisseur);
+                command.Parameters.AddWithValue("@Total", commande.Total);
+                command.Parameters.AddWithValue("@DateLivraison", commande.Datelivraison);
+                command.Parameters.AddWithValue("@DateGarantie", commande.Dategarantie);
+                command.Parameters.AddWithValue("@Marque", commande.Marque);
+                command.Parameters.AddWithValue("@PrixUnitaire", commande.PrixUnitaire);
+                command.Parameters.AddWithValue("@Quantite", commande.Quantite);
 
 
-            Command.ExecuteNonQuery();
-
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception (consider implementing a logging mechanism)
+                    throw new Exception("Erreur lors de l'ajout de la commande.", ex);
+                }
+                finally
+                {
+                    connection.Close(); // Ensure the connection is always closed
+                }
+            }
         }
+
 
         public void DeleteCommande(DateTime dateCommande)
         {
-            Command.CommandText = "DELETE FROM Commande WHERE DateCommande = @DateCommande";
-            Command.Parameters.Clear();
+            try
+            {
+                _connection.Open();
+                _command.CommandText = "DELETE FROM Commande WHERE DateCommande = @DateCommande";
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@DateCommande", dateCommande);
+
+                _command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression de la commande.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
         public List<Commande> GetAllCommande()
         {
-            List<Commande> commandes = new List<Commande>();
-            Command.CommandText = "select * from Commande";
-            SqlDataReader reader = Command.ExecuteReader();
-            while (reader.Read())
+            var commandes = new List<Commande>();
+            try
             {
-                Commande commande = new Commande
-                (
-                reader.GetInt32(1),
-                  reader.GetInt32(2),
-                     reader.GetFloat(3),
-                     reader.GetDateTime(4),
-                     reader.GetDateTime(5),
-                     gestionMaterielle.GetMaterielle(reader.GetInt32(0)
-                ));
-                commandes.Add(commande);
+                _connection.Open();
+                _command.CommandText = "SELECT * FROM Commande";
+                _command.Parameters.Clear();
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var commande = new Commande
+                        {
+                            Id = reader.GetInt32(0),
+                            IdAppelOffre = reader.GetInt32(1),
+                            IdFournisseur = reader.GetInt32(2),
+                            Total = reader.GetFloat(3),
+                            Datelivraison = reader.GetDateTime(4),
+                            Dategarantie = reader.GetDateTime(5),
+                            Marque = reader.GetString(6),
+                            PrixUnitaire = reader.GetDecimal(7),
+                            Quantite = reader.GetInt32(8) // Remplacez par la colonne appropriée
+                        };
+                        commandes.Add(commande);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération des commandes.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
             return commandes;
+        }
+
+        public void ValidateCommande(int id)
+        {
+            try
+            {
+                _connection.Open();
+                _command.CommandText = "UPDATE Commande SET Status = 'Validée' WHERE Id = @Id";
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@Id", id);
+
+                _command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la validation de la commande.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
     }
 }

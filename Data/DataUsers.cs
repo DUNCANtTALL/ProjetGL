@@ -62,17 +62,21 @@ namespace ProjetGL.Data
         {
             try
             {
-                Command.CommandText = "SELECT UserId, Name, Email, Password, UserType, CreatedAt FROM Users WHERE Email = @Username";
+                Command.CommandText = "SELECT UserId, Name, Email, Password, UserType FROM Users WHERE Email = @Email";
+                Command.Parameters.AddWithValue("@Email", username);
                 SqlDataReader rs = Command.ExecuteReader();
                 
                 while (rs.Read())
                 {
                     return new User
                     {
+                        UserId = int.Parse(rs["UserID"].ToString()),
                         Name = rs["Name"].ToString(),
                         Email = rs["Email"].ToString(),
                         Password = rs["Password"].ToString(),
-                    };
+                        Type = rs["UserType"].ToString()
+
+                    }; 
                 }
                 rs.Close();
                 return null; 

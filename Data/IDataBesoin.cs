@@ -8,6 +8,8 @@ namespace ProjetGL.Data
         public void Delete(int id);
         public Boolean status(int id );
         public List<Besion> GetBesions();
+        public List<Besion> GetValidatedBesions();
+
         public Besion CreateBesoin(string desc); 
         public void AddImprimante(Imprimante imprimante);
         public void AddOrdinateur(Ordinateur ordinateur);

@@ -1,0 +1,61 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.VoirCommandeModel
+@{
+}
+<h3>Gestion des Commandes Proposées</h3>
+
+@if (Model.Commandes != null && Model.Commandes.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Fournisseur</th>
+                <th>Appel d'Offre</th>
+                <th>Total (€)</th>
+                <th>Date de Livraison</th>
+                <th>Date de Garantie</th>
+                <th>Marque</th>
+                <th>Quantité</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var commande in Model.Commandes)
+            {
+                <tr>
+                    <td>@commande.IdFournisseur</td>
+                    <td>@commande.IdAppelOffre</td>
+                    <td>@commande.Total</td>
+                    <td>@commande.Datelivraison.ToString("dd/MM/yyyy")</td>
+                    <td>@commande.Dategarantie.ToString("dd/MM/yyyy")</td>
+                    <td>@commande.Marque</td>
+                    <td>@commande.Quantite</td>
+                    <td>
+                        <form method="post" asp-page-handler="Valider" class="d-inline">
+                            <input type="hidden" name="CommandeId" value="@commande.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                        </form>
+                        <form method="post" asp-page-handler="Rejeter" class="d-inline">
+                            <input type="hidden" name="CommandeId" value="@commande.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                        </form>
+                        <form method="post" asp-page-handler="Conversation" class="d-inline">
+                            <input type="hidden" name="FournisseurId" value="@commande.IdFournisseur" />
+                            <button type="submit" class="btn btn-primary btn-sm">Démarrer Conversation</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        Aucune commande proposée pour le moment.
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

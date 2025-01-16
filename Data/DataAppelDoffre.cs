@@ -5,52 +5,96 @@ namespace ProjetGL.Data
 {
     public class DataAppelDoffre : IDataAppeleDoffreAp
     {
+        private readonly SqlConnection _connection;
+        private readonly SqlCommand _command;
 
-        SqlConnection connection;
-        SqlCommand Command;
         public DataAppelDoffre()
         {
-            connection = new SqlConnection(@"Data Source=DESKTOP-6QJ1K1I;Initial Catalog=ProjetGL;Integrated Security=True");
-            Command = new SqlCommand();
-            Command.Connection = connection;
-
+            _connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;");
+            _command = new SqlCommand { Connection = _connection };
         }
+
         public void AddAppelDoffre(AppelD_offre appelDoffre)
         {
-            Command.CommandText = @"
-            INSERT INTO AppelOffre (DateDebut, DateFin, Description, Type) 
-            VALUES (@DateDebut, @DateFin, @Description)";
+            try
+            {
+                _connection.Open();
+                _command.CommandText = @"
+                    INSERT INTO AppelOffre (DateDebut, DateFin, Description, Titre) 
+                    VALUES (@DateDebut, @DateFin, @Description, @Titre)";
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@DateDebut", appelDoffre.DateDebut);
+                _command.Parameters.AddWithValue("@DateFin", appelDoffre.DateFin);
+                _command.Parameters.AddWithValue("@Description", appelDoffre.Description);
+                _command.Parameters.AddWithValue("@Titre", appelDoffre.Titre);
 
-            Command.Parameters.AddWithValue("@DateDebut", appelDoffre.DateDebut);
-            Command.Parameters.AddWithValue("@DateFin", appelDoffre.DateFin);
-            Command.Parameters.AddWithValue("@Description", appelDoffre.Description);
- 
-            Command.ExecuteNonQuery();
+                _command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de l'appel d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
         public void DeleteAppelDoffre(DateTime dateDebut)
         {
-            Command.CommandText = "DELETE FROM AppelOffre WHERE DateDebut = @DateDebut";
-            Command.Parameters.Clear();
+            try
+            {
+                _connection.Open();
+                _command.CommandText = "DELETE FROM AppelOffre WHERE DateDebut = @DateDebut";
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@DateDebut", dateDebut);
 
+                _command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression de l'appel d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
         public List<AppelD_offre> GetAllAppelDoffre()
         {
-           List<AppelD_offre> appelD_offres = new List<AppelD_offre>();
-            Command.CommandText = "select * from AppelOffre";
-            SqlDataReader reader = Command.ExecuteReader();
-            while (reader.Read())
+            var appelD_offres = new List<AppelD_offre>();
+            try
             {
-                AppelD_offre appelD_offre = new AppelD_offre
-                (
-                reader.GetDateTime(1),
-                  reader.GetDateTime(2),
-                     reader.GetString(3)
-                       
-                );
-                appelD_offres.Add(appelD_offre);
+                _connection.Open();
+                _command.CommandText = "SELECT DateDebut, DateFin, Description, Titre ,Id FROM AppelOffre";
+                _command.Parameters.Clear();
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var appelD_offre = new AppelD_offre
+                        {
+                            Id = reader.GetInt32(4),
+                            DateDebut = reader.GetDateTime(0),
+                            DateFin = reader.GetDateTime(1),
+                            Description = reader.GetString(2),
+                            Titre = reader.GetString(3)
+                        };
+                        appelD_offres.Add(appelD_offre);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération des appels d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
             return appelD_offres;
         }
     }

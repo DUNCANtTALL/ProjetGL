@@ -17,6 +17,10 @@ namespace ProjetGL.Buisness
         {
             return data.GetBesions();
         }
+        public List<Besion> GetValidatedBesions()
+        {
+            return data.GetValidatedBesions();
+        }
 
 
         public void AddOrdinateur(Ordinateur ordinateur)

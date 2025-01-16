@@ -17,10 +17,10 @@ namespace ProjetGL.Pages.Departement
         public List<Imprimante> Imprimantes { get; set; } = new List<Imprimante>();
 
         [BindProperty]
-        public List<int> OrdinateurQuantities { get; set; } = new List<int>(); // Quantities for ordinateurs
+        public List<int> OrdinateurQuantities { get; set; } = new List<int>();
 
         [BindProperty]
-        public List<int> ImprimanteQuantities { get; set; } = new List<int>(); // Quantities for imprimantes
+        public List<int> ImprimanteQuantities { get; set; } = new List<int>();
 
         public IActionResult OnPost()
         {
@@ -38,14 +38,14 @@ namespace ProjetGL.Pages.Departement
 
             try
             {
-                // Create the Besion
+                // Create the Besoin
                 Besion newBesion = ServicesPages.gestionBesoin.CreateBesoin(Description);
 
                 // Process Ordinateurs
                 for (int index = 0; index < Ordinateurs.Count; index++)
                 {
                     var ordinateurVm = Ordinateurs[index];
-                    int quantity = OrdinateurQuantities[index]; // Retrieve quantity separately
+                    int quantity = (index < OrdinateurQuantities.Count) ? OrdinateurQuantities[index] : 1;
 
                     for (int i = 0; i < quantity; i++)
                     {
@@ -63,31 +63,25 @@ namespace ProjetGL.Pages.Departement
                 }
 
                 // Process Imprimantes
-                // Process Imprimantes
                 for (int index = 0; index < Imprimantes.Count; index++)
                 {
                     var imprimanteVm = Imprimantes[index];
-
-                    // Validate quantity list size and use default value if missing
                     int quantity = (index < ImprimanteQuantities.Count) ? ImprimanteQuantities[index] : 1;
 
                     for (int i = 0; i < quantity; i++)
                     {
                         var imprimante = new Imprimante
                         (
-                            imprimanteVm.Marsque, 
-                            imprimanteVm.Vitesse, 
-                            imprimanteVm.Resoluton ,
+                            imprimanteVm.Vitesse,
+                            imprimanteVm.Resoluton,
+                            imprimanteVm.Marsque,
                             newBesion.Id
                         );
-                        Console.WriteLine($"Imprimantes count: {Imprimantes.Count}, ImprimanteQuantities count: {ImprimanteQuantities.Count}");
-
                         ServicesPages.gestionBesoin.AddImprimante(imprimante);
                     }
                 }
 
-
-                TempData["SuccessMessage"] = "Besion and related items have been successfully saved.";
+                TempData["SuccessMessage"] = "Besoin and related items have been successfully saved.";
                 return RedirectToPage("/Departement/SuccessPage");
             }
             catch (Exception ex)
@@ -96,6 +90,5 @@ namespace ProjetGL.Pages.Departement
                 return Page();
             }
         }
-
     }
 }

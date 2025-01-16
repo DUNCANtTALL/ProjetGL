@@ -1,0 +1,51 @@
+﻿@page
+@model ProjetGL.Pages.Fournisseur.ListerAppelOffreModel
+
+<h3>Liste des Appels d'Offres</h3>
+
+@if (Model.MsgSuccess != null)
+{
+    <div class="alert alert-success">@Model.MsgSuccess</div>
+}
+
+@if (Model.MsgError != null)
+{
+    <div class="alert alert-danger">@Model.MsgError</div>
+}
+
+@if (Model.Liste != null && Model.Liste.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appel in Model.Liste)
+            {
+                <tr>
+                    <td>@appel.Description</td>
+                    <td>@appel.DateDebut.ToString("dd/MM/yyyy")</td>
+                    <td>@appel.DateFin.ToString("dd/MM/yyyy")</td>
+                    <td>@appel.Description</td>
+                    <td>
+                        <a class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" asp-page="/Fournisseur/Formulaire" asp-route-id="@appel.Id" asp-route-userId="@Model.UserId" class="btn btn-danger btn-sm">Valider</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Aucun appel d'offre n'est disponible pour le moment.</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

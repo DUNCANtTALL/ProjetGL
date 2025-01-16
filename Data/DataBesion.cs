@@ -38,18 +38,28 @@ namespace ProjetGL.Data
 
         public void AddImprimante(Imprimante imprimante)
         {
-            using (var command = new SqlCommand(@"
-                INSERT INTO Imprimantes (BesionId, Marque, VitesseImpression, Resolution) 
-                VALUES (@BesionId, @Marque, @VitesseImpression, @Resolution)", connection))
+            try
             {
-                command.Parameters.AddWithValue("@BesionId", imprimante.BesionID);
-                command.Parameters.AddWithValue("@Marque", imprimante.Marsque);
-                command.Parameters.AddWithValue("@VitesseImpression", imprimante.Vitesse);
-                command.Parameters.AddWithValue("@Resolution", imprimante.Resoluton);
+                using (var command = new SqlCommand(@"
+            INSERT INTO Imprimantes (BesionId, Marque, VitesseImpression, Resolution) 
+            VALUES (@BesionId, @Marque, @VitesseImpression, @Resolution)", connection))
+                {
+                    command.Parameters.AddWithValue("@BesionId", imprimante.BesionID);
+                    command.Parameters.AddWithValue("@Marque", imprimante.Marsque);
+                    command.Parameters.AddWithValue("@VitesseImpression", imprimante.Vitesse);
+                    command.Parameters.AddWithValue("@Resolution", imprimante.Resoluton);
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding Imprimante: {ex.Message}");
+                throw;
             }
         }
+
+
 
         public void AddOrdinateur(Ordinateur ordinateur)
         {
@@ -155,14 +165,45 @@ namespace ProjetGL.Data
 
         public void Delete(int id)
         {
-            using (var command = new SqlCommand(@"
-                Delete Besion  
-                WHERE Id = @Id", connection))
+            using (var transaction = connection.BeginTransaction())
             {
-                command.Parameters.AddWithValue("@Id", id);
-                command.ExecuteNonQuery();
+                try
+                {
+                    // Delete related Ordinateurs
+                    using (var command = new SqlCommand(@"
+                DELETE FROM Ordinateurs WHERE BesionId = @Id", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Delete related Imprimantes (if applicable)
+                    using (var command = new SqlCommand(@"
+                DELETE FROM Imprimantes WHERE BesionId = @Id", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Delete the Besion
+                    using (var command = new SqlCommand(@"
+                DELETE FROM Besion WHERE Id = @Id", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine("Error: " + ex.Message);
+                    throw;
+                }
             }
         }
+
 
         public bool status(int id)
         {
@@ -185,5 +226,22 @@ namespace ProjetGL.Data
 
             return b;
         }
+
+        public List<Besion> GetValidatedBesions()
+        {
+            var besions = new List<Besion>();
+
+            using (var command = new SqlCommand("SELECT * FROM Besion WHERE isValidated = 1", connection))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    besions.Add(new Besion(reader.GetInt32(0), reader.GetString(1)));
+                }
+            }
+
+            return besions;
+        }
+
     }
 }

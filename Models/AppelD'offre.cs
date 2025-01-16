@@ -1,20 +1,21 @@
-﻿namespace ProjetGL.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProjetGL.Models
 {
     public class AppelD_offre
     {
-        private DateTime dateDebut;
-        private DateTime dateFin;
-        private string description;
+        public int Id { get; set; }
 
-        public AppelD_offre(DateTime dateDebut, DateTime dateFin, string description)
-        {
-            this.dateDebut = dateDebut;
-            this.dateFin = dateFin;
-            this.description = description;
-        }
+        [Required(ErrorMessage = "Le titre est obligatoire.")]
+        public string Titre { get; set; }
 
-        public DateTime DateDebut { get => dateDebut; set => dateDebut = value; }
-        public DateTime DateFin { get => dateFin; set => dateFin = value; }
-        public string Description { get => description; set => description = value; }
+        [Required(ErrorMessage = "La date de début est obligatoire.")]
+        public DateTime DateDebut { get; set; }
+
+        [Required(ErrorMessage = "La date de fin est obligatoire.")]
+        public DateTime DateFin { get; set; }
+
+        [Required(ErrorMessage = "La description est obligatoire.")]
+        public string Description { get; set; }
     }
 }

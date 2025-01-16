@@ -17,6 +17,7 @@
         <div class="mb-4">
             <h3>Ordinateurs</h3>
             <div id="ordinateurs">
+                <!-- Ordinateur 1 -->
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="mb-3">
@@ -46,6 +47,7 @@
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-secondary" onclick="addOrdinateur()">Ajouter un Ordinateur</button>
         </div>
 
         <div class="mb-4">
@@ -68,13 +70,83 @@
                         </div>
                         <div class="mb-3">
                             <label for="ImprimanteQuantities[0]" class="form-label">Quantité</label>
-                            <input type="number" name="ImprimanteQuantities[0]" class="form-control" placeholder="Quantité" min="1" value="1"  required />
-
+                            <input type="number" name="ImprimanteQuantities[0]" class="form-control" placeholder="Quantité" min="1" value="1" required />
                         </div>
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-secondary" onclick="addImprimante()">Ajouter une Imprimante</button>
         </div>
+
         <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
 </div>
+
+<script>
+    let ordinateurIndex = 1;
+    let imprimanteIndex = 1;
+
+    function addOrdinateur() {
+        const ordinateursContainer = document.getElementById('ordinateurs');
+        const newOrdinateur = `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="Ordinateurs[${ordinateurIndex}].Marque" class="form-label">Marque</label>
+                            <input type="text" name="Ordinateurs[${ordinateurIndex}].Marque" class="form-control" placeholder="Marque de l'ordinateur" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[${ordinateurIndex}].Cpu" class="form-label">CPU</label>
+                            <input type="text" name="Ordinateurs[${ordinateurIndex}].Cpu" class="form-control" placeholder="Processeur" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[${ordinateurIndex}].Ram" class="form-label">RAM</label>
+                            <input type="text" name="Ordinateurs[${ordinateurIndex}].Ram" class="form-control" placeholder="Mémoire vive (RAM)" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[${ordinateurIndex}].Disque" class="form-label">Disque</label>
+                            <input type="text" name="Ordinateurs[${ordinateurIndex}].Disque" class="form-control" placeholder="Disque dur/SSD" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Ordinateurs[${ordinateurIndex}].Ecran" class="form-label">Écran</label>
+                            <input type="text" name="Ordinateurs[${ordinateurIndex}].Ecran" class="form-control" placeholder="Taille de l'écran" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="OrdinateurQuantities[${ordinateurIndex}]" class="form-label">Quantité</label>
+                            <input type="number" name="OrdinateurQuantities[${ordinateurIndex}]" class="form-control" placeholder="Quantité" min="1" />
+                        </div>
+                    </div>
+                </div>
+            `;
+        ordinateursContainer.insertAdjacentHTML('beforeend', newOrdinateur);
+        ordinateurIndex++;
+    }
+
+    function addImprimante() {
+        const imprimantesContainer = document.getElementById('imprimantes');
+        const newImprimante = `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="Imprimantes[${imprimanteIndex}].Marque" class="form-label">Marque</label>
+                            <input type="text" name="Imprimantes[${imprimanteIndex}].Marque" class="form-control" placeholder="Marque de l'imprimante" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Imprimantes[${imprimanteIndex}].Vitesse" class="form-label">Vitesse</label>
+                            <input type="text" name="Imprimantes[${imprimanteIndex}].Vitesse" class="form-control" placeholder="Vitesse d'impression" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Imprimantes[${imprimanteIndex}].Resolution" class="form-label">Résolution</label>
+                            <input type="text" name="Imprimantes[${imprimanteIndex}].Resolution" class="form-control" placeholder="Résolution d'impression" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="ImprimanteQuantities[${imprimanteIndex}]" class="form-label">Quantité</label>
+                            <input type="number" name="ImprimanteQuantities[${imprimanteIndex}]" class="form-control" placeholder="Quantité" min="1" value="1" required />
+                        </div>
+                    </div>
+                </div>
+            `;
+        imprimantesContainer.insertAdjacentHTML('beforeend', newImprimante);
+        imprimanteIndex++;
+    }
+</script>
