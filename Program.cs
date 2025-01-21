@@ -1,5 +1,7 @@
 using ProjetGL.Buisness;
 using ProjetGL.Models;
+using System.ComponentModel.Design;
+using System.Diagnostics;
 
 namespace ProjetGL
 {
@@ -31,17 +33,23 @@ namespace ProjetGL
 
             app.MapRazorPages();
             app.UseDeveloperExceptionPage();
-         
-            Commande commande = new Commande();
-            commande.IdAppelOffre = 1;
-            commande.Datelivraison = DateTime.Now;
-            commande.Dategarantie = DateTime.Now;
-            commande.Marque = "hp";
-            commande.Quantite = 12;
-            commande.PrixUnitaire = 1;
-            commande.IdFournisseur = 1; 
-            ServicesPages.gestionCommande.addCommande(commande);
-            
+
+            List<Commande> Commandes = new List<Commande>(); 
+             Commandes = ServicesPages.gestionCommande.GetAllCommande();
+
+            if (Commandes == null || !Commandes.Any())
+            {
+                Console.WriteLine("No commands found.");
+            }
+            else
+            {
+                foreach (var commande in Commandes)
+                {
+                    Console.WriteLine($"Commande ID: {commande.Id}, Fournisseur: {commande.IdFournisseur}");
+                }
+            }
+
+
 
 
             app.Run();

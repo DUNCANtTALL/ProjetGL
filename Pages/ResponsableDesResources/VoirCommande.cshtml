@@ -1,7 +1,6 @@
 ﻿@page
 @model ProjetGL.Pages.ResponsableDesResources.VoirCommandeModel
-@{
-}
+
 <h3>Gestion des Commandes Proposées</h3>
 
 @if (Model.Commandes != null && Model.Commandes.Any())
@@ -22,9 +21,12 @@
         <tbody>
             @foreach (var commande in Model.Commandes)
             {
+                var fournisseur = Model.fournisseur.FirstOrDefault(f => f.UserId == commande.IdFournisseur);
+                var appel = Model.appels.FirstOrDefault(a => a.Id == commande.IdAppelOffre);
+
                 <tr>
-                    <td>@commande.IdFournisseur</td>
-                    <td>@commande.IdAppelOffre</td>
+                    <td>@fournisseur?.Name</td>
+                    <td>@appel?.Titre</td>
                     <td>@commande.Total</td>
                     <td>@commande.Datelivraison.ToString("dd/MM/yyyy")</td>
                     <td>@commande.Dategarantie.ToString("dd/MM/yyyy")</td>
@@ -33,8 +35,10 @@
                     <td>
                         <form method="post" asp-page-handler="Valider" class="d-inline">
                             <input type="hidden" name="CommandeId" value="@commande.Id" />
+                            <input type="hidden" name="FournisseurId" value="@commande.IdFournisseur" />
                             <button type="submit" class="btn btn-success btn-sm">Valider</button>
                         </form>
+
                         <form method="post" asp-page-handler="Rejeter" class="d-inline">
                             <input type="hidden" name="CommandeId" value="@commande.Id" />
                             <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
@@ -43,8 +47,10 @@
                             <input type="hidden" name="FournisseurId" value="@commande.IdFournisseur" />
                             <button type="submit" class="btn btn-primary btn-sm">Démarrer Conversation</button>
                         </form>
+
                     </td>
                 </tr>
+               
             }
         </tbody>
     </table>

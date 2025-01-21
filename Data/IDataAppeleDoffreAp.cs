@@ -7,5 +7,6 @@ namespace ProjetGL.Data
         List<AppelD_offre> GetAllAppelDoffre();
         void AddAppelDoffre(AppelD_offre appelDoffre);
         void DeleteAppelDoffre(DateTime dateDebut);
+        AppelD_offre GetAppelD_Offre(int id); 
     }
 }

@@ -19,5 +19,9 @@ namespace ProjetGL.Buisness
         {
             data.DeleteAppelDoffre(dateDebut);
         }
+        public AppelD_offre GetAppel(int id )
+        {
+            return data.GetAppelD_Offre(id); 
+        }
     }
 }

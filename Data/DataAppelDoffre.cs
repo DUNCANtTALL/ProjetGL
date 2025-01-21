@@ -97,5 +97,44 @@ namespace ProjetGL.Data
 
             return appelD_offres;
         }
+
+        public AppelD_offre GetAppelD_Offre(int id)
+        {
+            var appelD_offre = new AppelD_offre();
+            try
+            {
+                _connection.Open();
+                _command.CommandText = @$"SELECT DateDebut, DateFin, Description, Titre, Id FROM AppelOffre WHERE Id = @id";
+                _command.Parameters.Clear(); // Clear any existing parameters
+                _command.Parameters.AddWithValue("@id", id); // Use a parameterized query to prevent SQL injection
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    if (reader.Read()) // Use `if` since you're fetching a single record
+                    {
+                        appelD_offre = new AppelD_offre
+                        {
+                            Id = reader.GetInt32(4),
+                            DateDebut = reader.GetDateTime(0),
+                            DateFin = reader.GetDateTime(1),
+                            Description = reader.GetString(2),
+                            Titre = reader.GetString(3)
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération des appels d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
+            return appelD_offre;
+        }
+
+
     }
 }

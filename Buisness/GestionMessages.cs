@@ -16,8 +16,11 @@ namespace ProjetGL.Buisness
             Message newMessage = new Message(senderId, receiverId, content);
             data.AddMessage(newMessage.SenderId, newMessage.ReceiverId, newMessage.Content);
         }
-        
+        public List<Conversation> GetConversations(int currentUserId)
+        {
+            return data.GetConversations(currentUserId);
+        }
 
-       
+
     }
 }

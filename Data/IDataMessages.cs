@@ -1,4 +1,5 @@
-﻿using ProjetGL.Models;
+﻿using Microsoft.VisualBasic;
+using ProjetGL.Models;
 
 namespace ProjetGL.Data
 {
@@ -7,6 +8,8 @@ namespace ProjetGL.Data
         public void AddMessage(int senderId, int receiverId, string content);
         public List<Message> GetConversation(int senderId, int receiverId);
         public Message GetMessageById(int messageId);
+        public List<Conversation> GetConversations(int currentUserId);
+
 
 
     }

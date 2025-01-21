@@ -1,0 +1,46 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.ValidationModel
+@{
+}
+<h3 class="text-center mt-4">Ajouter un Fournisseur</h3>
+
+<div class="container">
+    <form method="post">
+        <!-- FournisseurId Field -->
+       
+        <!-- Nom Field -->
+        <div class="mb-3">
+            <label for="Nom" class="form-label">Nom de la société</label>
+            <input type="text" asp-for="Fournisseur.nom" class="form-control" id="Nom" />
+            <span asp-validation-for="Fournisseur.nom" class="text-danger"></span>
+        </div>
+
+        <!-- Lieu Field -->
+        <div class="mb-3">
+            <label for="Lieu" class="form-label">Lieu</label>
+            <input type="text" asp-for="Fournisseur.lieu" class="form-control" id="Lieu" />
+            <span asp-validation-for="Fournisseur.lieu" class="text-danger"></span>
+        </div>
+
+        <!-- Addresse Field -->
+        <div class="mb-3">
+            <label for="Addresse" class="form-label">Adresse</label>
+            <input type="text" asp-for="Fournisseur.Addresse" class="form-control" id="Addresse" />
+            <span asp-validation-for="Fournisseur.Addresse" class="text-danger"></span>
+        </div>
+
+        <!-- SiteInternet Field -->
+        <div class="mb-3">
+            <label for="SiteInternet" class="form-label">Site Internet</label>
+            <input type="url" asp-for="Fournisseur.siteInternet" class="form-control" id="SiteInternet" />
+            <span asp-validation-for="Fournisseur.siteInternet" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter Fournisseur</button>
+    </form>
+</div>
+
+
+
+
+

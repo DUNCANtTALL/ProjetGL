@@ -6,7 +6,7 @@
 
         private int idAppelOffre;
         private int idFournisseur;
-        private float total;
+        private double total;
         private DateTime datelivraison;
         private DateTime dategarantie;
         private string marque;
@@ -15,7 +15,7 @@
         private int quantite; 
         private List<Materielle> materielles;
 
-        public Commande(int id, int idAppelOffre, int idFournisseur, float total, DateTime datelivraison, DateTime dategarantie, string marque, decimal prixUnitaire, int quantite)
+        public Commande(int id, int idAppelOffre, int idFournisseur, double total, DateTime datelivraison, DateTime dategarantie, string marque, decimal prixUnitaire, int quantite)
         {
             Id = id;
             this.idAppelOffre = idAppelOffre;
@@ -34,7 +34,7 @@
 
         public int IdAppelOffre { get => idAppelOffre; set => idAppelOffre = value; }
         public int IdFournisseur { get => idFournisseur; set => idFournisseur = value; }
-        public float Total { get => total; set => total = value; }
+        public double Total { get => total; set => total = value; }
         public DateTime Datelivraison { get => datelivraison; set => datelivraison = value; }
         public DateTime Dategarantie { get => dategarantie; set => dategarantie = value; }
         public List<Materielle> Materielles { get => materielles; set => materielles = value; }

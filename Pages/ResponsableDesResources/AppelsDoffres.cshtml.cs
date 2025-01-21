@@ -7,6 +7,7 @@ namespace ProjetGL.Pages.Appelsdoffres
 {
     public class AppelsDoffresModel : PageModel
     {
+        
 
         [BindProperty]
         public string MsgSuccess { get; set; }

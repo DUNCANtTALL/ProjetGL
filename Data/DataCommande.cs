@@ -1,5 +1,6 @@
 ﻿using ProjetGL.Buisness;
 using ProjetGL.Models;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace ProjetGL.Data
@@ -95,7 +96,7 @@ namespace ProjetGL.Data
                             Id = reader.GetInt32(0),
                             IdAppelOffre = reader.GetInt32(1),
                             IdFournisseur = reader.GetInt32(2),
-                            Total = reader.GetFloat(3),
+                            Total = reader.GetDouble(3),
                             Datelivraison = reader.GetDateTime(4),
                             Dategarantie = reader.GetDateTime(5),
                             Marque = reader.GetString(6),
@@ -123,7 +124,7 @@ namespace ProjetGL.Data
             try
             {
                 _connection.Open();
-                _command.CommandText = "UPDATE Commande SET Status = 'Validée' WHERE Id = @Id";
+                _command.CommandText = "UPDATE Commande SET isValidated = 1 WHERE Id = @Id";
                 _command.Parameters.Clear();
                 _command.Parameters.AddWithValue("@Id", id);
 

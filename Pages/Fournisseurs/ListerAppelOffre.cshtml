@@ -34,7 +34,7 @@
                     <td>@appel.DateFin.ToString("dd/MM/yyyy")</td>
                     <td>@appel.Description</td>
                     <td>
-                        <a class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" asp-page="/Fournisseur/Formulaire" asp-route-id="@appel.Id" asp-route-userId="@Model.UserId" class="btn btn-danger btn-sm">Valider</a>
+                        <a class="block p-2 bg-yellow-500 text-black rounded hover:bg-yellow-600" asp-page="/Fournisseurs/Formulaire" asp-route-id="@appel.Id" asp-route-userId="@Model.UserId" class="btn btn-danger btn-sm">Valider</a>
                     </td>
                 </tr>
             }
