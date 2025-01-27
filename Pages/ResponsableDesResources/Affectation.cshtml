@@ -1,0 +1,139 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.AffectationModel
+@{
+}
+
+<h3>Livraison</h3>
+
+<h4>Ordinateurs Demandés</h4>
+@if (Model.livraison.ordinateurs != null && Model.livraison.ordinateurs.Any())
+{
+    <form method="post">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>CPU</th>
+                    <th>RAM</th>
+                    <th>Disque</th>
+                    <th>Quantité</th>
+                    <th>Département</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ordinateur in Model.livraison.ordinateurs)
+                {
+                    <tr>
+                        <td>@ordinateur.Marque</td>
+                        <td>@ordinateur.Cpu</td>
+                        <td>@ordinateur.Ram Go</td>
+                        <td>@ordinateur.Disque</td>
+                        <td>@ordinateur.Quantity</td>
+                        <td>@ordinateur.AffecteName1</td>
+                        <td>
+                            @if (ordinateur.Status)
+                            {
+                                <span class="badge bg-success">Validé</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Non Validé</span>
+                            }
+                        </td>
+                        <td>
+                            <button type="submit" asp-page-handler="ValidateOrdinateur" asp-route-id="@ordinateur.BesoinId" class="btn btn-success mb-2">
+                                Valider
+                            </button>
+                            <div class="d-flex gap-2">
+                                <select name="DepartementId" class="form-select">
+                                    <option value="">Sélectionner un département</option>
+                                    @foreach (var user in Model.users)
+                                    {
+                                        <option value="@user.UserId">@user.Name</option>
+                                    }
+                                </select>
+                                <button type="submit" asp-page-handler="AssignOrdinateur"
+                                        asp-route-besoinId="@ordinateur.BesoinId"
+                                        class="btn btn-primary">
+                                    Affecter
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>Aucun ordinateur demandé.</p>
+}
+
+<h4>Imprimantes Demandées</h4>
+@if (Model.livraison.imprimantes != null && Model.livraison.imprimantes.Any())
+{
+    <form method="post">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>Vitesse</th>
+                    <th>Résolution</th>
+                    <th>Quantité</th>
+                    <th>Département</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var imprimante in Model.livraison.imprimantes)
+                {
+                    <tr>
+                        <td>@imprimante.Marsque</td>
+                        <td>@imprimante.Vitesse pages/min</td>
+                        <td>@imprimante.Resoluton dpi</td>
+                        <td>@imprimante.Quantity</td>
+                        <td>@imprimante.AffecteName1</td>
+                        <td>
+                            @if (imprimante.Status)
+                            {
+                                <span class="badge bg-success">Validé</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Non Validé</span>
+                            }
+                        </td>
+                        <td>
+                            <button type="submit" asp-page-handler="ValidateImprimante" asp-route-id="@imprimante.BesionID" class="btn btn-success mb-2">
+                                Valider
+                            </button>
+                            <div class="d-flex gap-2">
+                                <select name="DepartementId" class="form-select">
+                                    <option value="">Sélectionner un département</option>
+                                    @foreach (var user in Model.users)
+                                    {
+                                        <option value="@user.UserId">@user.Name</option>
+                                    }
+                                </select>
+                                <button type="submit" asp-page-handler="AssignImprimante"
+                                        asp-route-besoinId="@imprimante.BesionID"
+                                        class="btn btn-primary">
+                                    Affecter
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>Aucune imprimante demandée.</p>
+
+}

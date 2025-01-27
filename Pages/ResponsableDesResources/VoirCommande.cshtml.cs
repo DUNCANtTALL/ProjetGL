@@ -75,8 +75,14 @@ namespace ProjetGL.Pages.ResponsableDesResources
             // Redirection vers une page ou un système de messagerie.
             return RedirectToPage("/ResponsableDesResources/Conversation", new { fournisseurId = FournisseurId });
         }
+        public IActionResult OnPostVoir()
+        {
+            TempData["Message"] = $"Conversation initiée avec le fournisseur ID: {FournisseurId}.";
+            // Redirection vers une page ou un système de messagerie.
+            return RedirectToPage("/ResponsableDesResources/VoirCommandeDetails", new { CommandeId = CommandeId , FournisseurId  = FournisseurId });
+        }
 
-        
+
 
         private bool ValiderCommande(int commandeId)
         {

@@ -8,6 +8,8 @@
         public static GestionAppeleDoffre gestionAppeleDoffre;
         public static GestionCommande gestionCommande;
         public static GestionFournisseur gestionFournisseur;
+        public static GestionLivraison gestionLivraison;
+        public static GestionAffectation gestionAffectation; 
 
         static ServicesPages()
         {
@@ -17,6 +19,9 @@
             gestionAppeleDoffre = new GestionAppeleDoffre();
             gestionCommande = new GestionCommande();
             gestionFournisseur = new GestionFournisseur();
+            gestionLivraison = new GestionLivraison();
+            gestionAffectation = new GestionAffectation(); 
+
 
         }
     }

@@ -2,3 +2,75 @@
 @model ProjetGL.Pages.Departement.AffectationsModel
 @{
 }
+<h3>Affectations</h3>
+
+<h4>Ordinateur Affecter </h4>
+@if (Model.ordinateurs != null && Model.ordinateurs.Any())
+{
+    <form method="post">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>CPU</th>
+                    <th>RAM</th>
+                    <th>Disque</th>
+                    <th>Quantité</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ordinateur in Model.ordinateurs)
+                {
+                    <tr>
+                        <td>@ordinateur.Marque</td>
+                        <td>@ordinateur.Cpu</td>
+                        <td>@ordinateur.Ram Go</td>
+                        <td>@ordinateur.Disque</td>
+                        <td>@ordinateur.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>Aucun ordinateur demandé.</p>
+}
+
+<h4>Imprimantes Affecter</h4>
+@if (Model.imprimantes != null && Model.imprimantes.Any())
+{
+    <form method="post">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>Vitesse</th>
+                    <th>Résolution</th>
+                    <th>Quantité</th>
+                    <th>Département</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var imprimante in Model.imprimantes)
+                {
+                    <tr>
+                        <td>@imprimante.Marsque</td>
+                        <td>@imprimante.Vitesse pages/min</td>
+                        <td>@imprimante.Resoluton dpi</td>
+                        <td>@imprimante.Quantity</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>Aucune imprimante demandée.</p>
+}

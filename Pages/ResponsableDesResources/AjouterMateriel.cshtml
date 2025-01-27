@@ -1,0 +1,79 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.AjouterMaterielModel
+
+@{
+    ViewData["Title"] = "Soumettre un Appareil";
+}
+
+<h2 class="text-center text-primary mb-4">Soumettre un Appareil</h2>
+
+<form method="post" class="container bg-light p-4 shadow rounded">
+    <!-- Marque -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Marque Imprimante</label>
+        <input asp-for="Imprimante.Marsque" class="form-control" placeholder="Entrez la marque de l'imprimante" />
+        <span asp-validation-for="Imprimante.Marsque" class="text-danger"></span>
+    </div>
+
+    <!-- Attributs Imprimante -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Vitesse Imprimante</label>
+        <input asp-for="Imprimante.Vitesse" class="form-control" placeholder="Entrez la vitesse (pages/min)" />
+        <span asp-validation-for="Imprimante.Vitesse" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Résolution Imprimante</label>
+        <input asp-for="Imprimante.Resoluton" class="form-control" placeholder="Entrez la résolution (dpi)" />
+        <span asp-validation-for="Imprimante.Resoluton" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Quantité Imprimante</label>
+        <input asp-for="Imprimante.Quantity" type="number" class="form-control" placeholder="Entrez la quantité d'imprimantes" />
+        <span asp-validation-for="Imprimante.Quantity" class="text-danger"></span>
+    </div>
+    <div> </div>
+
+    <!-- Marque Ordinateur -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Marque Ordinateur</label>
+        <input asp-for="Ordinateur.Marque" class="form-control" placeholder="Entrez la marque de l'ordinateur" />
+        <span asp-validation-for="Ordinateur.Marque" class="text-danger"></span>
+    </div>
+
+    <!-- Attributs Ordinateur -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">CPU</label>
+        <input asp-for="Ordinateur.Cpu" class="form-control" placeholder="Entrez le processeur" />
+        <span asp-validation-for="Ordinateur.Cpu" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">RAM</label>
+        <input asp-for="Ordinateur.Ram" class="form-control" placeholder="Entrez la RAM (Go)" />
+        <span asp-validation-for="Ordinateur.Ram" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Disque</label>
+        <input asp-for="Ordinateur.Disque" class="form-control" placeholder="Entrez la capacité du disque" />
+        <span asp-validation-for="Ordinateur.Disque" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Ecran</label>
+        <input asp-for="Ordinateur.Ecran" class="form-control" placeholder="Entrez la capacité du disque" />
+        <span asp-validation-for="Ordinateur.Ecran" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Quantité Ordinateur</label>
+        <input asp-for="Ordinateur.Quantity" type="number" class="form-control" placeholder="Entrez la quantité d'ordinateurs" />
+        <span asp-validation-for="Ordinateur.Quantity" class="text-danger"></span>
+    </div>
+
+   
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+  
+</form>

@@ -12,10 +12,14 @@
         private string marque;
 
         public decimal PrixUnitaire { get; set; }
-        private int quantite; 
+        public decimal PrixUnitaireImprimate { get; set; }
+
+        private int quantite;
+        private int quantiteImprimantes;
+
         private List<Materielle> materielles;
 
-        public Commande(int id, int idAppelOffre, int idFournisseur, double total, DateTime datelivraison, DateTime dategarantie, string marque, decimal prixUnitaire, int quantite)
+        public Commande(int id, int idAppelOffre, int idFournisseur, double total, DateTime datelivraison, DateTime dategarantie, string marque, decimal prixUnitaire , decimal prixUnitaireImprimant, int quantite, int quantiteImprimantes)
         {
             Id = id;
             this.idAppelOffre = idAppelOffre;
@@ -26,6 +30,8 @@
             this.marque = marque;
             PrixUnitaire = prixUnitaire;
             this.Quantite = quantite;
+            PrixUnitaireImprimate=prixUnitaireImprimant;
+            this.QuantiteImprimantes = quantiteImprimantes;
         }
         public Commande()
         {
@@ -40,5 +46,6 @@
         public List<Materielle> Materielles { get => materielles; set => materielles = value; }
         public string Marque { get => marque; set => marque = value; }
         public int Quantite { get => quantite; set => quantite = value; }
+        public int QuantiteImprimantes { get => quantiteImprimantes; set => quantiteImprimantes = value; }
     }
 }

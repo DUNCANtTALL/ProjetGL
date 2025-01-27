@@ -27,18 +27,15 @@ namespace ProjetGL.Data
 
                 _command.Parameters.Clear();
                 _command.Parameters.AddWithValue("@FournisseurId", fournisseur.fournisseurId);
-                _command.Parameters.AddWithValue("@NomSociété", fournisseur.nom ?? string.Empty); // Ensure value is not null
-                _command.Parameters.AddWithValue("@Lieu", fournisseur.lieu);
-                _command.Parameters.AddWithValue("@Adresse", fournisseur.Addresse);
-                _command.Parameters.AddWithValue("@SiteInternet", fournisseur.siteInternet);
+                _command.Parameters.AddWithValue("@NomSociété", fournisseur.nom ?? string.Empty); // Handle null
+                _command.Parameters.AddWithValue("@Lieu", fournisseur.lieu ?? (object)DBNull.Value); // Handle null
+                _command.Parameters.AddWithValue("@Adresse", fournisseur.Addresse ?? (object)DBNull.Value); // Handle null
+                _command.Parameters.AddWithValue("@SiteInternet", fournisseur.siteInternet ?? (object)DBNull.Value); // Handle null
 
-                _command.ExecuteNonQuery();
-
-
-                _command.ExecuteNonQuery();
+                _command.ExecuteNonQuery(); // Single call
             }
             catch (Exception ex)
-            { 
+            {
                 throw new Exception("Erreur lors de l'ajout du Fournisseur.", ex);
             }
             finally

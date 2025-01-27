@@ -32,9 +32,9 @@ namespace ProjetGL.Pages
             // Redirect based on user type
             return authenticatedUser.Type switch
             {
-                "Fournisseur" => RedirectToPage("Fournisseur/Home", new { userId = authenticatedUser.UserId }),
+                "Fournisseur" => RedirectToPage("Fournisseurs/Home", new { userId = authenticatedUser.UserId }),
                 "Chef De Projet" => RedirectToPage("/ChefdeProjet/Home", new { userId = authenticatedUser.UserId }),
-                "Departement" => RedirectToPage("/Departement/Home", new { userId = authenticatedUser.UserId }),
+                "Departement" => RedirectToPage("/Departement/Affectations", new { userId = authenticatedUser.UserId }),
                 _ => RedirectToPage("/ResponsableDesResources/Home", new { userId = authenticatedUser.UserId }),
             };
         }

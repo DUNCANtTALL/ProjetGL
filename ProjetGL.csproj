@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Compile Remove="Pages\Messagerie.cshtml.cs" />
+    <Compile Remove="Pages\ResponsableDesResources\VoirCommandeDetails.cs" />
   </ItemGroup>
 
   <ItemGroup>

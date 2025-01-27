@@ -48,6 +48,13 @@
                             <button type="submit" class="btn btn-primary btn-sm">Démarrer Conversation</button>
                         </form>
 
+                        <form method="post" asp-page-handler="Voir" class="d-inline">
+                            <input type="hidden" name="CommandeId" value="@commande.Id" />
+                            <input type="hidden" name="FournisseurId" value="@commande.IdFournisseur" />
+                            <button type="submit" class="btn ">voir Command</button>
+                        </form>
+
+
                     </td>
                 </tr>
                

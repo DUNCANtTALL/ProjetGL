@@ -34,20 +34,19 @@ namespace ProjetGL
             app.MapRazorPages();
             app.UseDeveloperExceptionPage();
 
-            List<Commande> Commandes = new List<Commande>(); 
-             Commandes = ServicesPages.gestionCommande.GetAllCommande();
+      List<Ordinateur> ordinateurs = new List<Ordinateur>();
+     List<Imprimante> imprimantes = new List<Imprimante>();
+            imprimantes = ServicesPages.gestionAppeleDoffre.GetImprimante(24);
+            ordinateurs = ServicesPages.gestionAppeleDoffre.GetOrdinateurs(24);
+            foreach (var item in imprimantes)
+            {
+                Console.WriteLine("imprimante : " + item.Marsque);
+            }
+            foreach (var item in ordinateurs)
+            {
+                Console.WriteLine("ordinateur : " + item.Marque);
+            }
 
-            if (Commandes == null || !Commandes.Any())
-            {
-                Console.WriteLine("No commands found.");
-            }
-            else
-            {
-                foreach (var commande in Commandes)
-                {
-                    Console.WriteLine($"Commande ID: {commande.Id}, Fournisseur: {commande.IdFournisseur}");
-                }
-            }
 
 
 

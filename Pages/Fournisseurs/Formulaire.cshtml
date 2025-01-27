@@ -7,69 +7,88 @@
 
 <h2 class="text-3xl font-semibold text-center mb-8 text-primary">Soumettre une Proposition</h2>
 
-<form method="post" class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 shadow-lg rounded-lg space-y-6 max-w-4xl mx-auto">
+<form method="post" class="bg-light p-4 shadow-lg rounded space-y-4 max-w-4xl mx-auto">
 
     <!-- Date de Livraison -->
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="soumission.Datelivraison" class="form-label">Date de Livraison Prévue</label>
-        <input type="date" asp-for="soumission.Datelivraison" class="form-control border-2 border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-primary" />
+        <input type="date" asp-for="soumission.Datelivraison" class="form-control" />
         <span asp-validation-for="soumission.Datelivraison" class="text-danger"></span>
     </div>
 
     <!-- Durée de Garantie -->
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="soumission.Dategarantie" class="form-label">Durée de Garantie</label>
-        <input asp-for="soumission.Dategarantie" class="form-control border-2 border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Entrez la durée de la garantie" />
+        <input asp-for="soumission.Dategarantie" class="form-control" placeholder="Entrez la durée de la garantie" />
         <span asp-validation-for="soumission.Dategarantie" class="text-danger"></span>
     </div>
 
     <!-- Marque des Ressources -->
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="soumission.Marque" class="form-label">Marque des Ressources Proposées</label>
-        <input asp-for="soumission.Marque" class="form-control border-2 border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Entrez la marque" />
+        <input asp-for="soumission.Marque" class="form-control" placeholder="Entrez la marque" />
         <span asp-validation-for="soumission.Marque" class="text-danger"></span>
     </div>
 
-    <!-- Prix Unitaire -->
-    <div class="form-group">
-        <label asp-for="soumission.PrixUnitaire" class="form-label">Prix Unitaire</label>
-        <input asp-for="soumission.PrixUnitaire" type="number" id="prixUnitaire" class="form-control border-2 border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Entrez le prix unitaire" step="0.01" />
+    <!-- Prix Unitaire des Ordinateurs -->
+    <div class="mb-3">
+        <label asp-for="soumission.PrixUnitaire" class="form-label">Prix Unitaire des Ordinateurs</label>
+        <input asp-for="soumission.PrixUnitaire" type="number" id="prixUnitaireOrdinateurs" class="form-control" placeholder="Entrez le prix unitaire" step="0.01" />
         <span asp-validation-for="soumission.PrixUnitaire" class="text-danger"></span>
     </div>
 
-    <!-- Quantité -->
-    <div class="form-group">
-        <label asp-for="soumission.Quantite" class="form-label">Quantité</label>
-        <input asp-for="soumission.Quantite" type="number" id="quantite" class="form-control border-2 border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Entrez la quantité" />
+    <!-- Prix Unitaire des Imprimantes -->
+    <div class="mb-3">
+        <label asp-for="soumission.PrixUnitaireImprimate" class="form-label">Prix Unitaire des Imprimantes</label>
+        <input asp-for="soumission.PrixUnitaireImprimate" type="number" id="prixUnitaireImprimantes" class="form-control" placeholder="Entrez le prix unitaire" step="0.01" />
+        <span asp-validation-for="soumission.PrixUnitaireImprimate" class="text-danger"></span>
+    </div>
+
+    <!-- Quantité des Ordinateurs -->
+    <div class="mb-3">
+        <label asp-for="soumission.Quantite" class="form-label">Quantité des Ordinateurs</label>
+        <input asp-for="soumission.Quantite" type="number" id="quantiteOrdinateurs" class="form-control" placeholder="Entrez la quantité" />
         <span asp-validation-for="soumission.Quantite" class="text-danger"></span>
     </div>
 
+    <!-- Quantité des Imprimantes -->
+    <div class="mb-3">
+        <label asp-for="soumission.QuantiteImprimantes" class="form-label">Quantité des Imprimantes</label>
+        <input asp-for="soumission.QuantiteImprimantes" type="number" id="quantiteImprimantes" class="form-control" placeholder="Entrez la quantité" />
+        <span asp-validation-for="soumission.QuantiteImprimantes" class="text-danger"></span>
+    </div>
+
     <!-- Total -->
-    <div class="form-group">
+    <div class="mb-3">
         <label class="form-label">Total (calculé automatiquement)</label>
-        <input id="total" type="text" readonly class="form-control bg-gray-100 border-2 border-gray-300 p-3 rounded-lg w-full" />
+        <input id="total" type="text" readonly class="form-control bg-light" />
     </div>
 
     <!-- Hidden Total Field -->
     <input type="hidden" asp-for="soumission.Total" id="hiddenTotal" />
 
-    <button type="submit" class="btn btn-primary w-full py-3 rounded-md">Envoyer la Proposition</button>
+    <button type="submit" class="btn btn-primary w-100 py-2">Ajouter le Matériel</button>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        document.getElementById('quantite').addEventListener('input', calculateTotal);
-        document.getElementById('prixUnitaire').addEventListener('input', calculateTotal);
-
         function calculateTotal() {
-            var prixUnitaire = parseFloat(document.getElementById('prixUnitaire').value) || 0;
-            var quantite = parseInt(document.getElementById('quantite').value) || 0;
-            var total = prixUnitaire * quantite;
+            var prixUnitaireOrdinateurs = parseFloat(document.getElementById('prixUnitaireOrdinateurs').value) || 0;
+            var quantiteOrdinateurs = parseInt(document.getElementById('quantiteOrdinateurs').value) || 0;
+
+            var prixUnitaireImprimantes = parseFloat(document.getElementById('prixUnitaireImprimantes').value) || 0;
+            var quantiteImprimantes = parseInt(document.getElementById('quantiteImprimantes').value) || 0;
+
+            var total = (prixUnitaireOrdinateurs * quantiteOrdinateurs) + (prixUnitaireImprimantes * quantiteImprimantes);
 
             document.getElementById('total').value = total.toFixed(2);
             document.getElementById('hiddenTotal').value = total.toFixed(2);
         }
 
+        document.getElementById('prixUnitaireOrdinateurs').addEventListener('input', calculateTotal);
+        document.getElementById('quantiteOrdinateurs').addEventListener('input', calculateTotal);
+        document.getElementById('prixUnitaireImprimantes').addEventListener('input', calculateTotal);
+        document.getElementById('quantiteImprimantes').addEventListener('input', calculateTotal);
     </script>
 }

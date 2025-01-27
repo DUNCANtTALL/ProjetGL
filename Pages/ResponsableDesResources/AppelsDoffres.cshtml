@@ -1,11 +1,9 @@
 ﻿@page
 @model ProjetGL.Pages.Appelsdoffres.AppelsDoffresModel
 
-
 @{
     ViewData["Title"] = "Gestion des Appels d'Offres";
 }
-
 
 
 
@@ -67,6 +65,8 @@
                     <td>
                         <a asp-page="./Edit" asp-route-id="@appel.Id" class="btn btn-warning btn-sm">Modifier</a>
                         <a asp-page="./Delete" asp-route-id="@appel.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                        <a asp-page="./AjouterMateriel" asp-route-id="@appel.Id" class="btn btn-light">Ajouter Materiel</a>
+
                     </td>
                 </tr>
             }

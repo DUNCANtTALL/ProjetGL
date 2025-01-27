@@ -145,6 +145,36 @@ namespace ProjetGL.Data
             return users;
         }
 
+        public List<User> GetDepartement()
+        {
+
+            var users = new List<User>();
+
+            try
+            {
+                Command.CommandText = "SELECT UserId, Name, Email, Password, CreatedAt FROM Users where UserType ='Departement' ";
+                SqlDataReader rs = Command.ExecuteReader();
+                while (rs.Read())
+                {
+                    User user = new User();
+                    user.UserId = (int)rs["UserId"];
+                    user.Name = (string)rs["Name"];
+                    user.Email = (string)rs["Email"];
+                    user.Password = (string)rs["Password"];
+                    users.Add(user);
+                }
+                rs.Close();
+                return users;
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
+            }
+
+            return users;
+        }
 
         public void UpdateUser(User user)
         {

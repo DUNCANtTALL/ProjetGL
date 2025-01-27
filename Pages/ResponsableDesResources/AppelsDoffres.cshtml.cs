@@ -7,7 +7,7 @@ namespace ProjetGL.Pages.Appelsdoffres
 {
     public class AppelsDoffresModel : PageModel
     {
-        
+
 
         [BindProperty]
         public string MsgSuccess { get; set; }
@@ -43,7 +43,7 @@ namespace ProjetGL.Pages.Appelsdoffres
 
             try
             {
-                ServicesPages.gestionAppeleDoffre.addAppeleDoffre(AppelDOffre); 
+                ServicesPages.gestionAppeleDoffre.addAppeleDoffre(AppelDOffre);
                 MsgSuccess = "L'appel d'offre a été ajouté avec succès."; // Message de succès  
                 return Page();
             }
@@ -52,7 +52,7 @@ namespace ProjetGL.Pages.Appelsdoffres
                 MsgError = "Une erreur s'est produite : " + ex.Message; // Message d'erreur  
                 return Page();
             }
-        
+
         }
     }
 }

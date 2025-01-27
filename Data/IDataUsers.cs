@@ -11,5 +11,7 @@ namespace ProjetGL.Data
         void UpdateUser(User user);
         void DeleteUser(string username);
         List<User> GetAllUsers();
+        List<User> GetDepartement();
+
     }
 }
