@@ -1,8 +1,8 @@
 ﻿@page
-@model ProjetGL.Pages.Fournisseur.HomeModel
+@model ProjetGL.Pages.ChefdeProjet.HomeModel
 @{
+    ViewData["Title"] = "Tableau de Bord";
 }
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,7 +38,7 @@
                         <div class="flex items-center space-x-4">
                             <i class="fas fa-user-circle text-3xl"></i>
                             <div class="text-left">
-                                <div class="text-lg font-semibold">Fournisseur</div>
+                                <div class="text-lg font-semibold">Chef de Projet</div>
                                 <div class="text-blue-200 text-sm">En ligne</div>
                             </div>
                         </div>
@@ -60,16 +60,16 @@
                 <div>
                     <h3 class="text-lg font-semibold text-gray-600 mb-4">Gestion</h3>
                     <div class="space-y-4">
-                        <a href="#" data-url="/Fournisseurs/ListerAppelOffre"
-                           class="flex items-center p-4 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 group transition-all">
-                            <i class="fas fa-project-diagram text-xl w-8"></i>
-                            <span class="text-lg">AppelOffre</span>
-                            <i class="fas fa-chevron-right ml-auto opacity-0 group-hover:opacity-100"></i>
-                        </a>
-                        <a href="#" data-url="/Fournisseurs/Formulaire"
+                        <a href="#" data-url="/ChefdeProjet/Besion"
                            class="flex items-center p-4 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 group transition-all">
                             <i class="fas fa-tasks text-xl w-8"></i>
-                            <span class="text-lg font-bold">Formulaire</span>
+                            <span class="text-lg font-bold">View and Validate Besoins</span>
+                            <i class="fas fa-chevron-right ml-auto opacity-0 group-hover:opacity-100"></i>
+                        </a>
+                        <a href="#"
+                           class="flex items-center p-4 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 group transition-all">
+                            <i class="fas fa-project-diagram text-xl w-8"></i>
+                            <span class="text-lg">Projets</span>
                             <i class="fas fa-chevron-right ml-auto opacity-0 group-hover:opacity-100"></i>
                         </a>
                     </div>
@@ -80,16 +80,14 @@
 
     <!-- Contenu Principal -->
     <main class="pt-20 pl-0 transition-all duration-300">
-        <div class="max-w-[90%] mx-auto p-8">
+        <div class="max-w-7xl mx-auto p-8">
             <!-- Zone de contenu dynamique -->
             <div class="bg-white rounded-2xl shadow-md border-2 border-blue-100 p-8">
-                <div id="dynamic-content" class="min-h-[800px]">
-                    <div class="flex flex-col items-center justify-center h-[800px] text-gray-600">
+                <div id="dynamic-content" class="min-h-[600px]">
+                    <div class="flex flex-col items-center justify-center h-[600px] text-gray-600">
                         <i class="fas fa-tasks text-6xl mb-6 text-blue-500"></i>
-                        <h1 class="text-5xl font-bold text-gray-800 mb-6">Gestion des Appels d'Offre et Formulaires</h1>
-                        <p class="text-xl text-gray-600 text-center leading-relaxed max-w-4xl">
-                            Accédez à vos appels d'offres ou remplissez un formulaire personnalisé avec des détails structurés.
-                        </p>
+                        <h1 class="text-4xl font-bold text-gray-800 mb-4">View and Validate Besoins</h1>
+                        <p class="text-xl text-gray-600">Assurez-vous que tous les besoins sont correctement validés.</p>
                     </div>
                 </div>
             </div>
@@ -113,8 +111,8 @@
                 const url = $(this).data('url');
 
                 $('#dynamic-content').html(`
-                            <div class="flex flex-col items-center justify-center h-[800px]">
-                                <div class="text-5xl text-blue-600 mb-6">
+                            <div class="flex flex-col items-center justify-center h-[400px]">
+                                <div class="text-4xl text-blue-600 mb-4">
                                     <i class="fas fa-circle-notch fa-spin"></i>
                                 </div>
                                 <p class="text-2xl text-gray-600">Chargement en cours...</p>

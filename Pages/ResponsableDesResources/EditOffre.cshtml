@@ -1,0 +1,40 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.EditOffreModel
+@{
+}
+
+
+<h1>Mettre à jour l'appel d'offre</h1>
+
+@if (Model.MsgSuccess != null)
+{
+    <div class="alert alert-success">@Model.MsgSuccess</div>
+}
+
+@if (Model.MsgError != null)
+{
+    <div class="alert alert-danger">@Model.MsgError</div>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="AppelDOffre.Id" />
+    <div>
+        <div class="form-group">
+            <label for="Titre">Titre</label>
+            <input type="text" class="form-control" asp-for="AppelDOffre.Titre" required />
+        </div>
+        <div class="form-group">
+            <label for="DateDebut">Date de début</label>
+            <input type="date" class="form-control" asp-for="AppelDOffre.DateDebut" required />
+        </div>
+        <div class="form-group">
+            <label for="DateFin">Date de fin</label>
+            <input type="date" class="form-control" asp-for="AppelDOffre.DateFin" required />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea class="form-control" asp-for="AppelDOffre.Description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+

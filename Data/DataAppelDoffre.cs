@@ -51,20 +51,94 @@ namespace ProjetGL.Data
         }
 
 
-        public void DeleteAppelDoffre(DateTime dateDebut)
+        public void DeleteAppelDoffre(int Id)
+        {
+            try
+            {
+                _connection.Open(); // Vérifiez que la connexion est bien ouverte
+                _command.CommandText = "DELETE FROM AppelOffre WHERE Id = @Id";
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@Id", Id);
+
+                int rowsAffected = _command.ExecuteNonQuery();
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("Aucune ligne n'a été supprimée. Vérifiez si l'ID existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression sur bd fonction delete de l'appel d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+        public AppelD_offre FindAppelOffre(int Id)
         {
             try
             {
                 _connection.Open();
-                _command.CommandText = "DELETE FROM AppelOffre WHERE DateDebut = @DateDebut";
+                _command.CommandText = @"
+            SELECT Id, DateDebut, DateFin, Description, Titre 
+            FROM AppelOffre 
+            WHERE Id = @Id";
                 _command.Parameters.Clear();
-                _command.Parameters.AddWithValue("@DateDebut", dateDebut);
+                _command.Parameters.AddWithValue("@Id", Id);
 
+                using (var reader = _command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new AppelD_offre
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DateDebut = reader.GetDateTime(reader.GetOrdinal("DateDebut")),
+                            DateFin = reader.GetDateTime(reader.GetOrdinal("DateFin")),
+                            Description = reader.GetString(reader.GetOrdinal("Description")),
+                            Titre = reader.GetString(reader.GetOrdinal("Titre"))
+                        };
+                    }
+                }
+
+                return null; // Si aucun résultat trouvé
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la recherche BD de fonction find de l'appel d'offre.", ex);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+        public void UpdateAppelDoffre(int Id, string titre, DateTime dateDebut, DateTime dateFin, string description)
+        {
+            try
+            {
+                _connection.Open();
+
+                // Préparez la requête de mise à jour
+                _command.CommandText = @"
+                 UPDATE AppelOffre 
+                 SET Titre = @Titre, DateDebut = @DateDebut, DateFin = @DateFin, Description = @Description
+                 WHERE Id = @Id";
+
+                // Effacer les anciens paramètres et ajouter les nouveaux
+                _command.Parameters.Clear();
+                _command.Parameters.AddWithValue("@Id", Id);
+                _command.Parameters.AddWithValue("@Titre", titre);
+                _command.Parameters.AddWithValue("@DateDebut", dateDebut);
+                _command.Parameters.AddWithValue("@DateFin", dateFin);
+                _command.Parameters.AddWithValue("@Description", description);
+
+                // Exécution de la commande
                 _command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de la suppression de l'appel d'offre.", ex);
+                throw new Exception("Erreur lors de la mise à jour de l'appel d'offre.", ex);
             }
             finally
             {

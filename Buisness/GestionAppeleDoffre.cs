@@ -15,10 +15,7 @@ namespace ProjetGL.Buisness
         {
             data.AddAppelDoffre(appeleDoffre);
         }
-        public void DeleteAppeleDoffre(DateTime dateDebut)
-        {
-            data.DeleteAppelDoffre(dateDebut);
-        }
+      
         public AppelD_offre GetAppel(int id )
         {
             return data.GetAppelD_Offre(id); 
@@ -42,6 +39,21 @@ namespace ProjetGL.Buisness
         public List<Imprimante> GetImprimante(int id)
         {
             return data.GetImprimante(id);
+        }
+        public void DeleteAppeleDoffre(int Id)
+        {
+            data.DeleteAppelDoffre(Id);
+        }
+
+        public AppelD_offre FindAppelOffre(int Id)
+        {
+            return data.FindAppelOffre(Id);
+
+        }
+
+        public void UpdateAppelDoffre(int id, string titre, DateTime dateDebut, DateTime dateFin, string description)
+        {
+            data.UpdateAppelDoffre(id, titre, dateDebut, dateFin, description);
         }
 
     }

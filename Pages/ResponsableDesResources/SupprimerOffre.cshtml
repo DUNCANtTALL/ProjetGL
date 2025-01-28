@@ -1,0 +1,26 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.SupprimerOffreModel
+@{
+    ViewData["Title"] = "Supprimer une offre";
+}
+
+<h1>Supprimer une offre</h1>
+
+@if (Model.MsgSuccess != null)
+{
+    <div class="alert alert-success">@Model.MsgSuccess</div>
+}
+
+@if (Model.MsgError != null)
+{
+    <div class="alert alert-danger">@Model.MsgError</div>
+}
+
+<form method="post" asp-page-handler="Delete">
+    <div class="form-group">
+        <label for="titre">Id de l'offre à supprimer :</label>
+        <input type="text" id="Id" name="Id" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+</form>
+

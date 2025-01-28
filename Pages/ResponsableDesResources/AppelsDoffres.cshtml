@@ -47,6 +47,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Titre</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
@@ -58,13 +59,14 @@
             @foreach (var appel in Model.Liste)
             {
                 <tr>
+                    <td>@appel.Id</td>
                     <td>@appel.Titre</td>
                     <td>@appel.DateDebut.ToString("dd/MM/yyyy")</td>
                     <td>@appel.DateFin.ToString("dd/MM/yyyy")</td>
                     <td>@appel.Description</td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@appel.Id" class="btn btn-warning btn-sm">Modifier</a>
-                        <a asp-page="./Delete" asp-route-id="@appel.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                        <a asp-page="./EditOffre" asp-route-id="@appel.Id" class="btn btn-warning btn-sm">Modifier</a>
+                        <a asp-page="./SupprimerOffre" asp-route-id="@appel.Id" class="btn btn-danger btn-sm">Supprimer</a>
                         <a asp-page="./AjouterMateriel" asp-route-id="@appel.Id" class="btn btn-light">Ajouter Materiel</a>
 
                     </td>
