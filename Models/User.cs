@@ -7,9 +7,11 @@
         public string Email { get; set; } 
         public string Password { get; set; } 
         public string Type { get; set; }
+        public string blackListed { get; set; }
 
 
-        public  List<Message> SentMessages { get; set; }
+
+        public List<Message> SentMessages { get; set; }
         public List<Message> ReceivedMessages { get; set; }
 
         public User()

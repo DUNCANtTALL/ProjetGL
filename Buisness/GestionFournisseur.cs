@@ -10,6 +10,10 @@ namespace ProjetGL.Buisness
         public void AddFournisseur(Societe fournisseur)
         {
             data.AddFournisseur(fournisseur);
-        } 
+        }
+        public bool IsAlreadyExist(int id)
+        {
+            return data.IsAlreadyExist(id);
+        }
     }
 }

@@ -1,0 +1,14 @@
+﻿@page
+@model ProjetGL.Pages.Technicien.SupprimerPanneModel
+@{
+    ViewData["Title"] = "Supprimer une Panne";
+}
+
+<h1>Supprimer la Panne</h1>
+
+<p>Voulez-vous vraiment supprimer la panne "@Model.PanneASupprimer.Description" ?</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+    <a asp-page="Panne" class="btn btn-secondary">Annuler</a>
+</form>

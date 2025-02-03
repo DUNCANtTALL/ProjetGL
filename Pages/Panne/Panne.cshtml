@@ -1,0 +1,41 @@
+﻿@page
+@model ProjetGL.Pages.Panne.PanneModel
+@{
+}
+
+<h1>Liste des Pannes</h1>
+
+<a asp-page="AjouterPanne" class="btn btn-primary">Ajouter une panne</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Date Signalement</th>
+            <th>Type</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var panne in Model.Pannes)
+        {
+            <tr>
+                <td>@panne.Id</td>
+                <td>@panne.Description</td>
+                <td>@panne.DateSignalement.ToString("dd/MM/yyyy")</td>
+                <td>@panne.Type</td>
+                <td>@panne.Statut</td>
+                <td>
+                    <a asp-page="ModifierPanne" asp-route-id="@panne.Id" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-page="SupprimerPanne" asp-route-id="@panne.Id" class="btn btn-danger btn-sm">Supprimer</a>
+
+                    <!-- 🔹 Nouveau bouton "Ajouter un Constat" -->
+                    <a asp-page="AjouterConstat" asp-route-panneId="@panne.Id" class="btn btn-success btn-sm">Ajouter un Constat</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

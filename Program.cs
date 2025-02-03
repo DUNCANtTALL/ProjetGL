@@ -1,4 +1,5 @@
 using ProjetGL.Buisness;
+using ProjetGL.Data;
 using ProjetGL.Models;
 using System.ComponentModel.Design;
 using System.Diagnostics;
@@ -33,8 +34,9 @@ namespace ProjetGL
 
             app.MapRazorPages();
             app.UseDeveloperExceptionPage();
+           
 
-      List<Ordinateur> ordinateurs = new List<Ordinateur>();
+            List<Ordinateur> ordinateurs = new List<Ordinateur>();
      List<Imprimante> imprimantes = new List<Imprimante>();
             imprimantes = ServicesPages.gestionAppeleDoffre.GetImprimante(24);
             ordinateurs = ServicesPages.gestionAppeleDoffre.GetOrdinateurs(24);

@@ -1,195 +1,190 @@
 ﻿using ProjetGL.Models;
 using System.Data.SqlClient;
-using System.Security.Principal;
 
 namespace ProjetGL.Data
 {
     public class DataUsers : IDataUsers
     {
-        SqlConnection connection;
-        SqlCommand Command;
-
-        public DataUsers()
-        {
-            connection = new SqlConnection();
-            connection.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
-            connection.Open();
-            Command = new SqlCommand();
-            Command.Connection = connection;
-        }
-        
+        private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ProjetDB;Integrated Security=True;";
 
         public void AddUser(User account)
         {
-            Command.CommandText = @"
-            INSERT INTO Users (Name, Email, Password, UserType, CreatedAt) 
-            VALUES (@Name, @Email, @Password, @UserType, GETDATE())";
-
-            Command.Parameters.AddWithValue("@Name", account.Name);
-            Command.Parameters.AddWithValue("@Email", account.Email);
-            Command.Parameters.AddWithValue("@Password", account.Password);
-            Command.Parameters.AddWithValue("@UserType", account.Type);
-            Command.ExecuteNonQuery();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(@"
+                    INSERT INTO Users (Name, Email, Password, UserType, CreatedAt) 
+                    VALUES (@Name, @Email, @Password, @UserType, GETDATE())", connection))
+                {
+                    command.Parameters.AddWithValue("@Name", account.Name);
+                    command.Parameters.AddWithValue("@Email", account.Email);
+                    command.Parameters.AddWithValue("@Password", account.Password);
+                    command.Parameters.AddWithValue("@UserType", account.Type);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
-       
 
         public void DeleteUser(string username)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = "DELETE FROM Users WHERE Name = @Username";
-                Command.Parameters.Clear();
-                Command.Parameters.AddWithValue("@Username", username);
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("DELETE FROM Users WHERE Name = @Username", connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    int rowsAffected = command.ExecuteNonQuery();
 
-                int rowsAffected = Command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    Console.WriteLine("User deleted successfully.");
+                    Console.WriteLine(rowsAffected > 0 ? "User deleted successfully." : "No user found with the provided username.");
                 }
-                else
-                {
-                    Console.WriteLine("No user found with the provided username.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while deleting the user: {ex.Message}");
             }
         }
 
-
-        public User FindUser(string username)
+        public User FindUser(string email)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = "SELECT UserId, Name, Email, Password, UserType FROM Users WHERE Email = @Email";
-                Command.Parameters.AddWithValue("@Email", username);
-                SqlDataReader rs = Command.ExecuteReader();
-                
-                while (rs.Read())
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT UserId, Name, Email, Password, UserType FROM Users WHERE Email = @Email", connection))
                 {
-                    return new User
+                    command.Parameters.AddWithValue("@Email", email);
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        UserId = int.Parse(rs["UserID"].ToString()),
-                        Name = rs["Name"].ToString(),
-                        Email = rs["Email"].ToString(),
-                        Password = rs["Password"].ToString(),
-                        Type = rs["UserType"].ToString()
-
-                    }; 
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserId = Convert.ToInt32(reader["UserID"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Password = reader["Password"].ToString(),
+                                Type = reader["UserType"].ToString()
+                            };
+                        }
+                    }
                 }
-                rs.Close();
-                return null; 
-             
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while finding the user: {ex.Message}");
-                return null;
-            }
+            return null;
         }
+
         public User FindUserByID(int id)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = $@"SELECT UserId, Name, Email, Password, UserType, CreatedAt FROM Users WHERE UserId = {id}";
-                SqlDataReader rs = Command.ExecuteReader();
-
-                while (rs.Read())
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT UserId, Name, Email, Password FROM Users WHERE UserId = @UserId", connection))
                 {
-                    return new User
+                    command.Parameters.AddWithValue("@UserId", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Name = rs["Name"].ToString(),
-                        Email = rs["Email"].ToString(),
-                        Password = rs["Password"].ToString(),
-                    };
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserId = Convert.ToInt32(reader["UserId"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Password = reader["Password"].ToString()
+                            };
+                        }
+                    }
                 }
-                rs.Close();
-                return null;
-
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while finding the user: {ex.Message}");
-                return null;
-            }
+            return null;
         }
 
+        public User FindUserByName(string username)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT UserId, Name, Email, Password, UserType FROM Users WHERE Name = @Name", connection))
+                {
+                    command.Parameters.AddWithValue("@Name", username);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserId = Convert.ToInt32(reader["UserID"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Password = reader["Password"].ToString(),
+                                Type = reader["UserType"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
 
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = "SELECT UserId, Name, Email, Password, CreatedAt FROM Users";
-                SqlDataReader rs = Command.ExecuteReader();
-                while (rs.Read())
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT UserId, Name, Email, Password FROM Users", connection))
                 {
-                    User user = new User();
-                    user.Name = (string)rs["Name"];
-                    user.Email = (string)rs["Email"];
-                    user.Password = (string)rs["Password"];
-                    users.Add(user); 
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            users.Add(new User
+                            {
+                                UserId = Convert.ToInt32(reader["UserId"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Password = reader["Password"].ToString()
+                            });
+                        }
+                    }
                 }
-                rs.Close();
-                return users;
-
-
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
-            }
-
             return users;
         }
 
         public List<User> GetDepartement()
         {
-
             var users = new List<User>();
 
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = "SELECT UserId, Name, Email, Password, CreatedAt FROM Users where UserType ='Departement' ";
-                SqlDataReader rs = Command.ExecuteReader();
-                while (rs.Read())
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT UserId, Name, Email, Password FROM Users WHERE UserType = 'Departement'", connection))
                 {
-                    User user = new User();
-                    user.UserId = (int)rs["UserId"];
-                    user.Name = (string)rs["Name"];
-                    user.Email = (string)rs["Email"];
-                    user.Password = (string)rs["Password"];
-                    users.Add(user);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            users.Add(new User
+                            {
+                                UserId = Convert.ToInt32(reader["UserId"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Password = reader["Password"].ToString()
+                            });
+                        }
+                    }
                 }
-                rs.Close();
-                return users;
-
-
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
-            }
-
             return users;
         }
 
         public void UpdateUser(User user)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                Command.CommandText = $@"update Users set password='{user.Password}' 
-                                        where username='{user.Name}'";
-                Command.ExecuteNonQuery();
-
-            }
-            catch
-            {
-                Console.WriteLine($"An error occurred while Updating");
-
-
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("UPDATE Users SET Password = @Password WHERE Name = @Name", connection))
+                {
+                    command.Parameters.AddWithValue("@Password", user.Password);
+                    command.Parameters.AddWithValue("@Name", user.Name);
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }

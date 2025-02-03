@@ -7,7 +7,6 @@
     <thead>
         <tr>
             <th>Fournisseur</th>
-            
             <th>Total (€)</th>
             <th>Date de Livraison</th>
             <th>Date de Garantie</th>
@@ -17,7 +16,7 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Model.fournisseur?.Name</td
+            <td>@Model.fournisseur?.Name</td>
             <td>@Model.commande.Total</td>
             <td>@Model.commande.Datelivraison.ToString("dd/MM/yyyy")</td>
             <td>@Model.commande.Dategarantie.ToString("dd/MM/yyyy")</td>

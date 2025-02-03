@@ -1,0 +1,46 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.PannesModel
+@{
+}
+
+<h1>Liste des Constats des Pannes</h1>
+@if (Model.constats != null && Model.constats.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Explication</th>
+                <th>DateConstat</th>
+                <th>Frequence</th>
+                <th>Ordre </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var commande in Model.constats)
+            {
+                
+
+                <tr>
+                    
+                    <td>@commande.Explication</td>
+                    <td>@commande.DateConstat.ToString("dd/MM/yyyy")</td>
+                    <td>@commande.Frequence</td>
+                    <td>@commande.Ordre</td>
+                    
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info"> 
+        Aucune pannes proposée pour le moment.
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

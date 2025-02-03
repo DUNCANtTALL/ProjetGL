@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjetGL.Buisness;
 using ProjetGL.Models;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 
 namespace ProjetGL.Pages.ResponsableDesResources
 {
@@ -18,6 +19,8 @@ namespace ProjetGL.Pages.ResponsableDesResources
         [BindProperty]
         public int FournisseurId { get; set; }
 
+
+        
         public void OnGet()
         {
             Commandes = ServicesPages.gestionCommande.GetAllCommande();
@@ -29,8 +32,17 @@ namespace ProjetGL.Pages.ResponsableDesResources
             foreach (var c in Commandes)
             {
                 var user = ServicesPages.managerUsers.GetUser(c.IdFournisseur);
-                if (user != null )
+                Console.WriteLine(""+user.Email);
+                Console.WriteLine(""+user.UserId);
+                if (user != null)
                 {
+                    // Check if the user is blacklisted
+                    if (ServicesPages.gestionListeNoir.VerifierListeNoir(user.UserId)== true)
+                    {
+                        user.blackListed = "Liste Noir";
+                    }
+                    Console.WriteLine("b" + user.blackListed);
+
                     fournisseur.Add(user);
                 }
 
@@ -43,18 +55,27 @@ namespace ProjetGL.Pages.ResponsableDesResources
         }
 
 
-
         public IActionResult OnPostValider()
         {
-            if (ValiderCommande(CommandeId))
+            if (ServicesPages.gestionFournisseur.IsAlreadyExist(FournisseurId))
             {
-                TempData["Message"] = "Commande validée avec succès.";
-                return RedirectToPage("/ResponsableDesResources/Validation", new { fournisseurId = FournisseurId });
 
+                if (ValiderCommande(CommandeId))
+                {
+                    TempData["Message"] = "Commande validée avec succès.";
+                    return RedirectToPage("/ResponsableDesResources/Validation", new { fournisseurId = FournisseurId });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Une erreur s'est produite lors de la validation de la commande.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Fournisseur non trouvé.");
             }
 
-            ModelState.AddModelError("", "Une erreur s'est produite lors de la validation.");
-            return Page();
+                return RedirectToPage("/ResponsableDesResources/VoirCommande");            ;
         }
 
         public IActionResult OnPostRejeter()
@@ -84,7 +105,7 @@ namespace ProjetGL.Pages.ResponsableDesResources
 
 
 
-        private bool ValiderCommande(int commandeId)
+        private bool ValiderCommande(int commandeId  )
         {
             try
             {

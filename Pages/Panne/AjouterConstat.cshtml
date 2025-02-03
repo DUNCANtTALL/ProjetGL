@@ -1,0 +1,51 @@
+﻿@page
+@model ProjetGL.Pages.Panne.AjouterConstatModel
+
+@{
+    ViewData["Title"] = "Ajouter un Constat";
+}
+
+<h1>Ajouter un Constat</h1>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-success">@Model.Message</div>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="PanneId" />
+
+    <div class="mb-3">
+        <label class="form-label">Explication :</label>
+        <input asp-for="NouveauConstat.Explication" class="form-control" required />
+        <span asp-validation-for="NouveauConstat.Explication" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Date  :</label>
+        <input type="date" NouveauConstat.DateConstat" class="form-control" required />
+        <span asp-validation-for="NouveauConstat.DateConstat" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fréquence :</label>
+        <select asp-for="NouveauConstat.Frequence" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            <option>Rare</option>
+            <option>Fréquent</option>
+            <option>Permanent</option>
+        </select>
+        <span asp-validation-for="NouveauConstat.Frequence" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Ordre :</label>
+        <select asp-for="NouveauConstat.Ordre" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            <option>Matériel</option>
+            <option>Logiciel</option>
+        </select>
+        <span asp-validation-for="NouveauConstat.Ordre" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>
+

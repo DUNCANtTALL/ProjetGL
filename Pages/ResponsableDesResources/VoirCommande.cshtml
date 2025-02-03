@@ -15,7 +15,9 @@
                 <th>Date de Garantie</th>
                 <th>Marque</th>
                 <th>Quantité</th>
+                <th>Etat du Fournisseur</th>
                 <th>Actions</th>
+               
             </tr>
         </thead>
         <tbody>
@@ -32,6 +34,11 @@
                     <td>@commande.Dategarantie.ToString("dd/MM/yyyy")</td>
                     <td>@commande.Marque</td>
                     <td>@commande.Quantite</td>
+                    <td class="@(fournisseur?.blackListed != "" ? "text-danger" : "text-dark")">
+                        @fournisseur?.blackListed
+                    </td>
+
+
                     <td>
                         <form method="post" asp-page-handler="Valider" class="d-inline">
                             <input type="hidden" name="CommandeId" value="@commande.Id" />

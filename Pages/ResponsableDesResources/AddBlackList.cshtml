@@ -1,0 +1,21 @@
+﻿@page
+@model ProjetGL.Pages.ResponsableDesResources.AddBlackListModel
+@{
+}
+<form method="post" class="col-4 offset-4">
+    <div>
+        <label class="form-label">Username</label>
+        <input type="text" asp-for="user.Name" class="form-control" />
+        <span asp-validation-for="user.Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label class="form-label">Raison</label>
+        <input type="text" asp-for="Raison" class="form-control" />
+        <span asp-validation-for="Raison" class="text-danger"></span>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn btn-success">Create User</button>
+    </div>
+</form>

@@ -35,7 +35,10 @@ namespace ProjetGL.Buisness
         {
             return data.GetDepartement();
         }
-
+        public User GetUserByName(string name)
+        {
+            return data.FindUserByName(name);
+        }
 
 
 

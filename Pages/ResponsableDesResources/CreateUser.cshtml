@@ -24,8 +24,10 @@
         <label class="form-label">User Type</label>
         <select asp-for="user.Type" class="form-control">
             <option value="">-- Select User Type --</option>
-            <option value="Chef de Projet">Chef de Projet</option>
-            <option value="Departement">Departement</option>
+            <option value="Chef de Projet">Chef</option>
+            <option value="Departement">Enseignant</option>
+            <option value="Technicien">Technicien </option>
+
         </select>
         <span asp-validation-for="user.Type" class="text-danger"></span>
     </div>

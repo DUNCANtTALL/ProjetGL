@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjetGL.Buisness;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjetGL.Models
 {
