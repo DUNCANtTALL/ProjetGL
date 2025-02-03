@@ -34,21 +34,8 @@ namespace ProjetGL
 
             app.MapRazorPages();
             app.UseDeveloperExceptionPage();
-           
 
-            List<Ordinateur> ordinateurs = new List<Ordinateur>();
-     List<Imprimante> imprimantes = new List<Imprimante>();
-            imprimantes = ServicesPages.gestionAppeleDoffre.GetImprimante(24);
-            ordinateurs = ServicesPages.gestionAppeleDoffre.GetOrdinateurs(24);
-            foreach (var item in imprimantes)
-            {
-                Console.WriteLine("imprimante : " + item.Marsque);
-            }
-            foreach (var item in ordinateurs)
-            {
-                Console.WriteLine("ordinateur : " + item.Marque);
-            }
-
+;
 
 
 

@@ -20,7 +20,7 @@ namespace ProjetGL.Pages.Fournisseur
         // Method to get the value from the query string
         public void OnGet()
         {
-
+            Console.WriteLine("l"+UserId);
             try
             {
                 // Récupérer la liste des appels d'offres

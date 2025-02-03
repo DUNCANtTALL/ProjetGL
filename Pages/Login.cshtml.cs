@@ -33,9 +33,10 @@ namespace ProjetGL.Pages
             return authenticatedUser.Type switch
             {
                 "Fournisseur" => RedirectToPage("Fournisseurs/Home", new { userId = authenticatedUser.UserId }),
-                "Chef De Projet" => RedirectToPage("/ChefdeProjet/Home", new { userId = authenticatedUser.UserId }),
-                "Departement" => RedirectToPage("/Departement/Affectations", new { userId = authenticatedUser.UserId }),
-                _ => RedirectToPage("/ResponsableDesResources/Home", new { userId = authenticatedUser.UserId }),
+                "Chef de Projet" => RedirectToPage("/ChefdeProjet/Home", new { userId = authenticatedUser.UserId }),
+                "Departement" => RedirectToPage("/Departement/Home", new { userId = authenticatedUser.UserId }),
+                "Technicien" => RedirectToPage("/Technicien/Home", new { userId = authenticatedUser.UserId }),
+                _ => RedirectToPage("/ResponsableDesResources/DashBoard", new { userId = authenticatedUser.UserId }),
             };
         }
     }

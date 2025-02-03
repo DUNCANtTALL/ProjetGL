@@ -52,9 +52,11 @@ namespace ProjetGL.Data
                     command.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                Console.WriteLine($"Error adding Imprimante: {ex.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                Console.WriteLine($"Error Code: {ex.Number}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 throw;
             }
         }
