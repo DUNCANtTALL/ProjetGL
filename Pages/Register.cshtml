@@ -2,28 +2,36 @@
 @model ProjetGL.Pages.RegisterModel
 @{
     string today = DateTime.Now.ToShortDateString();
-
 }
-<h1>Registration</h1>
-<p>Aujourd'hui le @today</p>
-<form method="post" class="col-4 offset-4">
-    <div>
-        <label class="form-label">Username</label>
-        <input type="text" asp-for="user.Name" class="form-control" />
-        <span asp-validation-for="user.Name" class="text-danger"></span>
-    </div>
-    <div>
-        <label class="form-label">Email</label>
-        <input type="text" asp-for="user.Email" class="form-control" />
-        <span asp-validation-for="user.Email" class="text-danger"></span>
-    </div>
-    <div>
-        <label class="form-label">Password</label>
-        <input type="password" asp-for="user.Password" class="form-control" />
-        <span asp-validation-for="user.Password" class="text-danger"></span>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-success">Register</button>
-    </div>
 
-</form>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-5" style="max-width: 700px; width: 100%;">
+        <h2 class="text-center mb-4">Registration</h2>
+        <p class="text-center text-muted">Aujourd'hui le @today</p>
+        <form method="post">
+            <div class="mb-4">
+                <label class="form-label">Username</label>
+                <input type="text" asp-for="user.Name" class="form-control" placeholder="Enter your username" />
+                <span asp-validation-for="user.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Email</label>
+                <input type="email" asp-for="user.Email" class="form-control" placeholder="Enter your email" />
+                <span asp-validation-for="user.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" asp-for="user.Password" class="form-control" placeholder="Enter your password" />
+                <span asp-validation-for="user.Password" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">Register</button>
+            </div>
+        </form>
+        <div class="offset-4">
+            <p>
+                You have  account?        <a href="/Login">Login Now</a>
+            </p>
+        </div>
+    </div>
+</div>

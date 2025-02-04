@@ -18,7 +18,7 @@ namespace ProjetGL.Pages
         }
        public void OnPost(User User)
         {
-            user.Type = "Fournisseur"; 
+            User.Type = "Fournisseur"; 
             ServicesPages.managerUsers.addUser(User);
         }
     }

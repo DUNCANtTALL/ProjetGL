@@ -13,7 +13,7 @@ namespace ProjetGL.Pages.ResponsableDesResources
 
         public void OnGet()
         {
-            var currentUserId = 2; 
+            var currentUserId = 1006; 
             var managerMessages = ServicesPages.managerMessages;
             var managerUsers = ServicesPages.managerUsers;
 

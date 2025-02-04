@@ -6,31 +6,54 @@
 
 <h1>Modifier la Panne</h1>
 
-<form method="post">
-    <input type="hidden" asp-for="PanneModifiee.Id" />
 
-    <div class="form-group">
-        <label>Description</label>
-        <input type="text" asp-for="PanneModifiee.Description" class="form-control" required />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4">
+                    <h3 class="text-center text-warning mb-4">Modifier la Panne</h3>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="PanneModifiee.Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description :</label>
+                            <textarea asp-for="PanneModifiee.Description" class="form-control rounded-3" placeholder="Décrivez la panne..." required></textarea>
+                            <span asp-validation-for="PanneModifiee.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Date Signalement :</label>
+                            <input type="date" asp-for="PanneModifiee.DateSignalement" class="form-control rounded-3" required />
+                            <span asp-validation-for="PanneModifiee.DateSignalement" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type :</label>
+                            <select asp-for="PanneModifiee.Type" class="form-select rounded-3">
+                                <option>Matériel</option>
+                                <option>Logiciel</option>
+                            </select>
+                            <span asp-validation-for="PanneModifiee.Type" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Statut :</label>
+                            <select asp-for="PanneModifiee.Statut" class="form-select rounded-3">
+                                <option>En attente</option>
+                                <option>En cours</option>
+                                <option>Résolu</option>
+                            </select>
+                            <span asp-validation-for="PanneModifiee.Statut" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning rounded-3 fw-bold">Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Date Signalement</label>
-        <input type="date" asp-for="PanneModifiee.DateSignalement" class="form-control" required />
-    </div>
-    <div class="form-group">
-        <label>Type</label>
-        <select asp-for="PanneModifiee.Type" class="form-control">
-            <option>Matériel</option>
-            <option>Logiciel</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Statut</label>
-        <select asp-for="PanneModifiee.Statut" class="form-control">
-            <option>En attente</option>
-            <option>En cours</option>
-            <option>Résolu</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary mt-2">Modifier</button>
-</form>
+</div>

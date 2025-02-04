@@ -6,32 +6,47 @@
     ViewData["Title"] = "Ajouter une Panne";
 }
 
-<h1>Ajouter une Nouvelle Panne</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4">
+                    <h3 class="text-center text-danger mb-4">Ajouter une Nouvelle Panne</h3>
 
-<form method="post">
-    <div class="form-group">
-        <label>Description</label>
-        <input type="text" asp-for="NouvellePanne.Description" class="form-control" required />
-    </div>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea asp-for="NouvellePanne.Description" class="form-control rounded-3" placeholder="Décrivez le problème..." required></textarea>
+                        </div>
 
-    <div class="form-group">
-        <label>Date Signalement</label>
-        <input type="date" asp-for="NouvellePanne.DateSignalement" class="form-control" required />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Date de Signalement</label>
+                            <input type="date" asp-for="NouvellePanne.DateSignalement" class="form-control rounded-3" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type</label>
+                            <select asp-for="NouvellePanne.Type" class="form-select rounded-3">
+                                <option>Matériel</option>
+                                <option>Logiciel</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Statut</label>
+                            <select asp-for="NouvellePanne.Statut" class="form-select rounded-3">
+                                <option>En attente</option>
+                                <option>En cours</option>
+                                <option>Résolu</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success rounded-3 fw-bold">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Type</label>
-        <select asp-for="NouvellePanne.Type" class="form-control">
-            <option>Matériel</option>
-            <option>Logiciel</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Statut</label>
-        <select asp-for="NouvellePanne.Statut" class="form-control">
-            <option>En attente</option>
-            <option>En cours</option>
-            <option>Résolu</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-success mt-2">Ajouter</button>
-</form>
+</div>

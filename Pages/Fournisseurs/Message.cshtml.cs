@@ -3,22 +3,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjetGL.Buisness;
 using ProjetGL.Models;
 
-namespace ProjetGL.Pages.ResponsableDesResources
+namespace ProjetGL.Pages.Fournisseurs
 {
-    public class ConversationModel : PageModel
+    public class MessageModel : PageModel
     {
-        [BindProperty(SupportsGet = true)]
-        public int fournisseurId { get; set; }
-
         private readonly GestionMessages _gestionMessages = new GestionMessages();
 
         public List<Message> Conversation { get; private set; }
-        public int CurrentUserId { get; private set; } = 1006;
 
-       
+        [BindProperty(SupportsGet = true)]
+        public int UserId { get; set; }
+        public int ReceiverId { get; private set; } = 1006;
+
         public void OnGet()
         {
-            Conversation = _gestionMessages.GetConversation(CurrentUserId, fournisseurId);
+            Conversation = _gestionMessages.GetConversation(UserId, ReceiverId);
         }
 
         public IActionResult OnPost(int senderId, int receiverId, string messageContent)

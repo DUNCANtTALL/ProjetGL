@@ -1,0 +1,37 @@
+﻿@page
+@model ProjetGL.Pages.Fournisseurs.MessageModel
+@{
+}
+
+<h2 style="text-align: center;">Chat</h2>
+
+<div id="chatBox" style="max-height: 400px; overflow-y: auto; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #f9f9f9;">
+    @if (Model.Conversation != null && Model.Conversation.Any())
+    {
+        foreach (var message in Model.Conversation)
+        {
+                    <div style="margin-bottom: 10px; display: flex; justify-content: @(message.SenderId == Model.UserId ? "flex-end" : "flex-start");">
+                        <div style="background-color: @(message.SenderId == Model.UserId ? "#d4edda" : "#f8d7da"); padding: 10px; border-radius: 10px; max-width: 70%; display: inline-block; text-align: left;">
+                            <strong style="display: block; margin-bottom: 5px; color: #555;">@(message.SenderId == Model.UserId ? "You" : "Other"):</strong>
+                            <span style="font-size: 14px; color: #333;">@message.Content</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: @(message.SenderId == Model.UserId ? "flex-end" : "flex-start");">
+                        <small style="color: #888; font-size: 12px; margin-top: 5px;">@message.SentAt.ToString("g")</small>
+                    </div>
+        }
+    }
+    else
+    {
+            <p style="text-align: center; color: #aaa;">No messages yet.</p>
+    }
+</div>
+
+<form method="post" style="margin-top: 15px;">
+    <input type="hidden" name="senderId" value="@Model.UserId" />
+    <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <textarea name="messageContent" placeholder="Type your message..." required style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; resize: none; height: 50px;"></textarea>
+        <button type="submit" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Send</button>
+    </div>
+</form>
